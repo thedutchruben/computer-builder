@@ -11,6 +11,7 @@ class User
     private String $email;
 
     /**
+     * Get the id of the user
      * @return int
      */
     public function getId(): int
@@ -19,6 +20,8 @@ class User
     }
 
     /**
+     * Set the user id
+     * Only the database will do this
      * @param int $id
      */
     public function setId(int $id): void
@@ -27,6 +30,7 @@ class User
     }
 
     /**
+     * Get the username of the User
      * @return String
      */
     public function getUsername(): string
@@ -35,6 +39,7 @@ class User
     }
 
     /**
+     * Set the username of the user
      * @param String $username
      */
     public function setUsername(string $username): void
