@@ -1,0 +1,14 @@
+{
+    "name": "ruben/pcbuilder",
+    "description": "A pc builder site",
+    "type": "project",
+    "require": {
+        "bramus/router": "^1.6"
+    },
+    "authors": [
+        {
+            "name": "Ruben de Roos",
+            "email": "deroosruben@gmail.com"
+        }
+    ]
+}
