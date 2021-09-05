@@ -1,9 +1,15 @@
 {
     "name": "ruben/pcbuilder",
     "description": "A pc builder site",
-    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "PcBuilder\\": "src/"
+        }
+    },
+
     "require": {
-        "bramus/router": "^1.6"
+        "vlucas/phpdotenv": "4.*",
+        "devcoder-xyz/php-router": "^1.2"
     },
     "authors": [
         {
