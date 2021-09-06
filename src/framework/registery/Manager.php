@@ -1,7 +1,7 @@
 <?php
 namespace PcBuilder\Framework\Registery;
 
-class Manager
+class Manager extends RegisteryBase
 {
 
 }

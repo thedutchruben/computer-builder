@@ -3,12 +3,13 @@
 namespace PcBuilder\Framework\Registery;
 
 class Controller
-{
+extends RegisteryBase{
 
     private Template $templates;
 
     public function __construct()
     {
+        parent::__construct();
         $this->templates = new Template($_SERVER['DOCUMENT_ROOT'] .'\pages', []);
     }
 
