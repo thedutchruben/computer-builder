@@ -7,7 +7,7 @@ use DevCoder\Route;
 use DevCoder\UrlGenerator;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PcBuilderRouter implements \DevCoder\RouterInterface
+class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
 {
 
     private const NO_ROUTE = 404;
@@ -28,6 +28,7 @@ class PcBuilderRouter implements \DevCoder\RouterInterface
      */
     public function __construct(array $routes = [])
     {
+        parent::__construct();
         $this->routes = new \ArrayObject();
         $this->urlGenerator = new UrlGenerator($this->routes);
         foreach ($routes as $route) {
@@ -52,7 +53,23 @@ class PcBuilderRouter implements \DevCoder\RouterInterface
             if ($route->match($path, $method) === false) {
                 continue;
             }
-
+            $name = $route->getName();
+            $path = $route->getPath();
+            $params =json_encode($route->getParameters());
+            $methods = json_encode($route->getMethods());
+            $vars = json_encode($route->getVarsNames());
+            $this->getMysql()->getPdo()->exec("INSERT INTO `pc-builder`.`request_log`
+(`name`,
+`path`,
+`parameters`,
+`methods`,
+`vars`)
+VALUES(
+'$name',
+'$path',
+'$params',
+'$methods',
+'$vars');");
             return $route;
         }
 

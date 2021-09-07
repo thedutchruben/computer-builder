@@ -11,6 +11,11 @@ class UserManager extends Manager
 
     }
 
+    public function login($vars = []){
+
+    }
+
+
     public function is_authenticated() : bool
     {
 

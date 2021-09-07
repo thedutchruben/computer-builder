@@ -3,6 +3,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use DevCoder\Route;
 use Dotenv\Dotenv;
+use PcBuilder\Framework\Execptions\TemplateNotFound;
 use PcBuilder\Framework\Registery\PcBuilderRouter;
 use PcBuilder\Modules\Controllers\IndexController;
 
@@ -37,7 +38,8 @@ try {
 
     echo $controller(...array_values($arguments));
 
-} catch (\Exception $exception) {
-//    header("HTTP/1.0 404 Not Found");
-//    var_dump($exception);
+} catch (TemplateNotFound $exception) {
+
+} catch (Exception){
+
 }

@@ -1,8 +1,20 @@
 -- Create the schema for all the tables
 CREATE SCHEMA IF NOT EXISTS `pc-builder`;
 
+-- Setup request logging
+CREATE TABLE IF NOT EXISTS `pc-builder`.`request_log` (
+                                            `id` INT NOT NULL AUTO_INCREMENT,
+                                            `name` VARCHAR(60) NULL,
+                                            `path` VARCHAR(120) NULL,
+                                            `parameters` MEDIUMTEXT NULL,
+                                            `methods` MEDIUMTEXT NULL,
+                                            `vars` MEDIUMTEXT NULL,
+                                            `date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                                            PRIMARY KEY (`id`),
+                                            UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
 -- Create the user data
-CREATE TABLE `pc-builder`.`users` (
+CREATE TABLE IF NOT EXISTS `pc-builder`.`users` (
                                       `id` INT NOT NULL AUTO_INCREMENT,
                                       `username` VARCHAR(45) NOT NULL,
                                       `email` VARCHAR(55) NOT NULL,
@@ -12,7 +24,7 @@ CREATE TABLE `pc-builder`.`users` (
                                       UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
 -- Create the data for the customers
-CREATE TABLE `pc-builder`.`customer_data` (
+CREATE TABLE IF NOT EXISTS  `pc-builder`.`customer_data` (
                                               `customer_id` INT NOT NULL,
                                               `phone_number` VARCHAR(15) NULL,
                                               `country` VARCHAR(45) NULL,
@@ -21,3 +33,7 @@ CREATE TABLE `pc-builder`.`customer_data` (
                                               `zip_code` VARCHAR(10) NULL,
                                               PRIMARY KEY (`customer_id`),
                                               UNIQUE INDEX `customer_id_UNIQUE` (`customer_id` ASC));
+
+
+ALTER TABLE `pc-builder`.`users` ADD CONSTRAINT `fk_users_id` FOREIGN KEY(`id`)
+    REFERENCES `pc-builder`.`customer_data` (`customer_id`);

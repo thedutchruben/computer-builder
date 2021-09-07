@@ -2,6 +2,8 @@
 
 namespace PcBuilder\Framework\Registery;
 
+use PcBuilder\Framework\Execptions\TemplateNotFound;
+
 class Template
 {
 
@@ -18,8 +20,7 @@ class Template
     public function render(string $view, array $context = [])
     {
         if (!file_exists($file = $this->path.$view)) {
-            var_dump("File not found");
-            throw new \Exception(sprintf('The file %s could not be found.', $view));
+            throw new TemplateNotFound(sprintf('The file %s could not be found.', $view));
         }
 
         extract(array_merge($context, ['template' => $this]));
