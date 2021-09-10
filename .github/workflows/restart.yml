@@ -1,9 +1,0 @@
-on: push
-jobs:
-  curl:
-    runs-on: ubuntu-latest
-    steps:
-      - name: curl
-        uses: wei/curl@v1
-        with:
-          args: -u  "${{ secrets.SERVER_KEY_NAME }}:${{ secrets.SERVER_KEY }}" -X POST -H 'Content-Type= application/json'   -d '{"rollingRestartStrategy":""}' 'http://server01.thedutchruben.nl:8080/v2-beta/projects/1a5/services/1s42/?action=restart'
