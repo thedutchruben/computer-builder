@@ -4,6 +4,10 @@ namespace PcBuilder\Framework\Registery;
 
 use PcBuilder\Framework\Database\Mysql;
 
+/**
+ * The base of the registery
+ * In this class the flasher and mysql has been implemented
+ */
 class RegisteryBase
 {
 

@@ -5,20 +5,21 @@ use DevCoder\Route;
 use Dotenv\Dotenv;
 use PcBuilder\Framework\Execptions\TemplateNotFound;
 use PcBuilder\Framework\Registery\PcBuilderRouter;
+use PcBuilder\Framework\Registery\Template;
 use PcBuilder\Modules\Controllers\IndexController;
 
 
 $dotenv  = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+$dotenv->safeLoad();
 
 
 $router = new PcBuilderRouter([
-    new Route('home_page', '/', [IndexController::class])
+    new Route('home_page', '/', [IndexController::class]),
+    new Route('siteMap', '/sitemap', [IndexController::class,"siteMap"]),
+    new Route('siteMap', '/contact', [IndexController::class,"contact"])
+
 ]);
 
-foreach (range(1,10) as $i){
-    $router->add(new Route('prebuild_'.$i ,'/prebuild/'.$i, [IndexController::class]));
-}
 
 
 try {
@@ -39,7 +40,13 @@ try {
     echo $controller(...array_values($arguments));
 
 } catch (TemplateNotFound $exception) {
-
-} catch (Exception){
-
+    $template = new Template($_SERVER['DOCUMENT_ROOT'] .'\pages', []);
+    $template->render('ErrorPage.php',[
+        "errorName" => "Tempate not found"
+    ]);
+} catch (Exception $exception){
+    $template = new Template($_SERVER['DOCUMENT_ROOT'] .'\pages', []);
+    $template->render('ErrorPage.php',[
+        "errorName" => $exception->getMessage()
+    ]);
 }

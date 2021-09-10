@@ -5,6 +5,7 @@ namespace PcBuilder\Framework\Registery;
 use DevCoder\Exception\RouteNotFound;
 use DevCoder\Route;
 use DevCoder\UrlGenerator;
+use PcBuilder\Framework\Execptions\TemplateNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 
 class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
@@ -47,6 +48,9 @@ class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
         return $this->matchFromPath($serverRequest->getUri()->getPath(), $serverRequest->getMethod());
     }
 
+    /**
+     * @throws TemplateNotFound
+     */
     public function matchFromPath(string $path, string $method): Route
     {
         foreach ($this->routes as $route) {
@@ -70,11 +74,15 @@ VALUES(
 '$params',
 '$methods',
 '$vars');");
+            $this->getMysql()->getPdo()->prepare("? ?",
+            [
+                ":key" => "Value"
+            ]);
             return $route;
         }
 
-        throw new RouteNotFound(
-            'No route found for ' . $method,
+        throw new TemplateNotFound(
+            "Deze pagina is niet gevonden!",
             self::NO_ROUTE
         );
     }
