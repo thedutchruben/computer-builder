@@ -6,6 +6,7 @@ use Dotenv\Dotenv;
 use PcBuilder\Framework\Execptions\TemplateNotFound;
 use PcBuilder\Framework\Registery\PcBuilderRouter;
 use PcBuilder\Framework\Registery\Template;
+use PcBuilder\Modules\Controllers\ConfiguratorController;
 use PcBuilder\Modules\Controllers\IndexController;
 
 
@@ -16,7 +17,8 @@ $dotenv->safeLoad();
 $router = new PcBuilderRouter([
     new Route('home_page', '/', [IndexController::class]),
     new Route('siteMap', '/sitemap', [IndexController::class,"siteMap"]),
-    new Route('siteMap', '/contact', [IndexController::class,"contact"])
+    new Route('siteMap', '/contact', [IndexController::class,"contact"]),
+    new Route('custom_pc', '/configurator/{name}', [ConfiguratorController::class,"Configurator"]),
 
 ]);
 

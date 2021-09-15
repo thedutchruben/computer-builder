@@ -1,5 +1,10 @@
 <?php
 
+namespace PcBuilder\Objects\UserTypes;
+
+
+use PcBuilder\Objects\User;
+
 /**
  * Customer extends from the user
  * The customer is the one that's buying stuff

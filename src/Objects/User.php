@@ -1,5 +1,7 @@
 <?php
 
+namespace PcBuilder\Objects;
+
 /**
  * The user is a customer with this we can track who orderd what
  * The database contains the basic data the password will be let out of the object
