@@ -1,0 +1,14 @@
+.badge-pill{
+    padding-right: .6em;
+    padding-left: .6em;
+    border-radius: 10rem;
+}
+
+.navbar {
+    position: relative !important;
+    /*display: flex !important;*/
+    /*flex-wrap: wrap;*/
+    /*align-items: center;*/
+    /*padding-top: 1rem;*/
+    /*padding-bottom: 1rem;*/
+}

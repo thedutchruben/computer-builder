@@ -1,0 +1,17 @@
+
+.header-text{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.right{
+    float: right;
+}
+
+.left{
+    float: left;
+}
+
+.red{
+    background-color: #f44336 !important;
+}

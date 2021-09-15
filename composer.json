@@ -1,0 +1,20 @@
+{
+    "name": "ruben/pcbuilder",
+    "description": "A pc builder site",
+    "autoload": {
+        "psr-4": {
+            "PcBuilder\\": "src/"
+        }
+    },
+
+    "require": {
+        "vlucas/phpdotenv": "4.*",
+        "devcoder-xyz/php-router": "^1.2"
+    },
+    "authors": [
+        {
+            "name": "Ruben de Roos",
+            "email": "deroosruben@gmail.com"
+        }
+    ]
+}
