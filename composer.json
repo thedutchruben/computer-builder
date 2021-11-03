@@ -8,7 +8,7 @@
     },
 
     "require": {
-        "vlucas/phpdotenv": "4.*",
+        "vlucas/phpdotenv": "5.*",
         "devcoder-xyz/php-router": "^1.2",
         "dompdf/dompdf": "^1.0"
     },
