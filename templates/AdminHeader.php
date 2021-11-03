@@ -34,23 +34,23 @@
 <body>
 <main>
 <div class="flex-shrink-0 p-3 bg-dark text-white" style="width: 280px;height: 100vh">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <a href="/admin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">User panel</span>
+        <span class="fs-4">Portal</span>
     </a>
     <hr>
     <ul class="list-unstyled ps-0" style="color: white !important;">
-        <li class="mb-1">
-            <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                Home
-            </button>
-            <div class="collapse" id="home-collapse" style="">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="/account/user/orders" class="link-dark rounded">Orders</a></li>
-                    <li><a href="/account/user/contact" class="link-dark rounded">Contact</a></li>
-                </ul>
-            </div>
-        </li>
+<!--        <li class="mb-1">-->
+<!--            <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">-->
+<!--                Home-->
+<!--            </button>-->
+<!--            <div class="collapse" id="home-collapse" style="">-->
+<!--                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
+<!--                    <li><a href="/account/user/orders" class="link-dark rounded">Orders</a></li>-->
+<!--                    <li><a href="/account/user/contact" class="link-dark rounded">Contact</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </li>-->
         <li class="mb-1">
             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                 Dashboard
@@ -70,7 +70,7 @@
             <div class="collapse" id="orders-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="/account/admin/configs" class="link-dark rounded">Configs</a></li>
-                    <li><a href="/account/admin/products" class="link-dark rounded">Producten</a></li>
+                    <li><a href="/admin/products" class="link-dark rounded">Producten</a></li>
                     <li><a href="/account/admin/stats" class="link-dark rounded">Statistics</a></li>
 <!--                    <li><a href="#" class="link-dark rounded"></a></li>-->
                 </ul>
@@ -80,8 +80,8 @@
     <hr>
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-            <strong>mdo</strong>
+            <img src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>{{username}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
 <!--            <li><a class="dropdown-item" href="#">New project...</a></li>-->

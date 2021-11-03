@@ -98,6 +98,41 @@ class ConfigruatorManager extends Manager
         return null;
     }
 
+    function getComponents() : ?array
+    {
+
+        $items = [];
+
+        try {
+            $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `pc-builder`.`components`");
+            $statement->execute();
+            foreach ($statement->fetchAll() as $row){
+                $component = new Component($row['id'],$row['displayName']);
+                if(isset($row['description'])){
+                    $component->setDescription($row['description']);
+                }
+
+                if(isset($row['image'])){
+                    $component->setImage($row['image']);
+                }
+                $component->setPrice($row['price']);
+                if(isset($row['powerneed'])){
+                    $component->setPowerNeed($row['powerneed']);
+                }
+
+                array_push($items,$component);
+            }
+
+
+
+        }catch (\Exception $exception){
+            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden");
+        }
+
+        return $items;
+    }
+
+
     function getOrderdComponents($ids,$addNone = false) :array
     {
         $components = array();

@@ -43,6 +43,7 @@ $router = new PcBuilderRouter([
 
     //admin
     new Route('admin_index', '/admin', [AdminController::class,"index"]),
+    new Route('admin_products', '/admin/products', [AdminController::class,"products"]),
     new Route('admin_orders', '/admin/orders', [AdminController::class,"orders"]),
     new Route('admin_configs', '/admin/configs', [AdminController::class,"configs"]),
     new Route('admin_config', '/admin/configs/{id}', [AdminController::class,"config"]),
