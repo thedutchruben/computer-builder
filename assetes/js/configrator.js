@@ -3,8 +3,22 @@ var components = {};
 
 //Add selected to cheapest option
 $(document).ready(function() {
+    //Temp save the first url
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    //Select all the defaults
     $(".card-group .card:first-child" ).addClass('selected');
     updateData();
+
+    //Change to defaults to the selected
+    for (let componentsKey in components) {
+        if(urlParams.has(componentsKey)){
+            unselect(componentsKey,components[componentsKey])
+            selectItem(componentsKey,urlParams.get(componentsKey))
+            updateData()
+        }
+    }
 });
 
 //Remove selection from element
@@ -32,12 +46,13 @@ function selectItem(category,id){
 
 //Update data like the price
 function updateData(){
-    price = 0.00;
+    let price = 0.00;
     for (const elementsByClassNameElement of document.getElementsByClassName('selected')) {
         price += parseFloat(elementsByClassNameElement.dataset.price);
         components[elementsByClassNameElement.dataset.category] = elementsByClassNameElement.dataset.id;
     }
-    document.getElementById('finalPrice').innerText = price;
+    document.getElementById('finalPrice').innerHTML = "€" + price;
+    updateUrl();
 }
 
 
@@ -49,8 +64,14 @@ $(".card").click(function() {
     return false;
 });
 
-// function updateUrl(){
-//     for (let componentsKey in components) {
-//
-//     }
-// }
+function updateUrl(){
+    var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?';
+    for (let componentsKey in components) {
+        newUrl+= componentsKey + "=" + components[componentsKey] + "&";
+
+    }
+    if (history.pushState) {
+        window.history.pushState({path:newUrl},'',newUrl);
+    }
+    document.getElementById("config").value=JSON.stringify(components);
+}

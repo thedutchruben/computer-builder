@@ -16,6 +16,7 @@ class Configurator
     private array $psu= [];
     private array $storage= [];
     private array $rgb= [];
+    private array $dvd= [];
 
     /**
      * @return int
@@ -185,4 +186,27 @@ class Configurator
         return $this->rgb;
     }
 
+    /**
+     * @return array
+     */
+    public function getDvd(): array
+    {
+        return $this->dvd;
+    }
+
+    /**
+     * @param array $dvd
+     */
+    public function setDvd(array $dvd): void
+    {
+        $this->dvd = $dvd;
+    }
+
+    /**
+     * @param array $rgb
+     */
+    public function setRgb(array $rgb): void
+    {
+        $this->rgb = $rgb;
+    }
 }

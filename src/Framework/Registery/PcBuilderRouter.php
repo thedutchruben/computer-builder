@@ -2,6 +2,7 @@
 
 namespace PcBuilder\Framework\Registery;
 
+use ArrayObject;
 use DevCoder\Exception\RouteNotFound;
 use DevCoder\Route;
 use DevCoder\UrlGenerator;
@@ -14,14 +15,14 @@ class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
     private const NO_ROUTE = 404;
 
     /**
-     * @var \ArrayObject<Route>
+     * @var ArrayObject<Route>
      */
-    private $routes;
+    private ArrayObject $routes;
 
     /**
      * @var UrlGenerator
      */
-    private $urlGenerator;
+    private UrlGenerator $urlGenerator;
 
     /**
      * Router constructor.
@@ -30,7 +31,7 @@ class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
     public function __construct(array $routes = [])
     {
         parent::__construct();
-        $this->routes = new \ArrayObject();
+        $this->routes = new ArrayObject();
         $this->urlGenerator = new UrlGenerator($this->routes);
         foreach ($routes as $route) {
             $this->add($route);
@@ -57,12 +58,13 @@ class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
             if ($route->match($path, $method) === false) {
                 continue;
             }
-            $name = $route->getName();
-            $path = $route->getPath();
-            $params =json_encode($route->getParameters());
-            $methods = json_encode($route->getMethods());
-            $vars = json_encode($route->getVarsNames());
-            $this->getMysql()->getPdo()->exec("INSERT INTO `pc-builder`.`request_log`
+            try{
+                $name = $route->getName();
+                $path = $route->getPath();
+                $params =json_encode($route->getParameters());
+                $methods = json_encode($route->getMethods());
+                $vars = json_encode($route->getVarsNames());
+                $this->getMysql()->getPdo()->exec("INSERT INTO `pc-builder`.`request_log`
 (`name`,
 `path`,
 `parameters`,
@@ -74,24 +76,34 @@ VALUES(
 '$params',
 '$methods',
 '$vars');");
-            $this->getMysql()->getPdo()->prepare("? ?",
-            [
-                ":key" => "Value"
-            ]);
+            }catch (\Exception $exception){
+                $this->flasher_error("Er is iets fout gegaan!");
+            }
+
             return $route;
         }
 
+        //Throw Exception if the page is not found
         throw new TemplateNotFound(
             "Deze pagina is niet gevonden!",
             self::NO_ROUTE
         );
     }
 
+    /**
+     * @param string $name
+     * @param array $parameters
+     * @return string the generated url
+     */
     public function generateUri(string $name, array $parameters = []): string
     {
         return $this->urlGenerator->generate($name, $parameters);
     }
 
+    /**
+     * Returns the url generator
+     * @return UrlGenerator
+     */
     public function getUrlGenerator(): UrlGenerator
     {
         return $this->urlGenerator;

@@ -1,52 +1,100 @@
--- Create the schema for all the tables
-CREATE SCHEMA IF NOT EXISTS `pc-builder`;
+CREATE TABLE `request_log` (
+                               `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                               `name` VARCHAR(60),
+                               `path` VARCHAR(120),
+                               `parameters` MEDIUMTEXT,
+                               `methods` MEDIUMTEXT,
+                               `vars` MEDIUMTEXT,
+                               `date` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
+);
 
--- Setup request logging
-CREATE TABLE IF NOT EXISTS `pc-builder`.`request_log` (
-                                            `id` INT NOT NULL AUTO_INCREMENT,
-                                            `name` VARCHAR(60) NULL,
-                                            `path` VARCHAR(120) NULL,
-                                            `parameters` MEDIUMTEXT NULL,
-                                            `methods` MEDIUMTEXT NULL,
-                                            `vars` MEDIUMTEXT NULL,
-                                            `date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-                                            PRIMARY KEY (`id`),
-                                            UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+CREATE TABLE `users` (
+                         `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                         `username` VARCHAR(45) NOT NULL,
+                         `email` VARCHAR(55) NOT NULL,
+                         `password` TEXT NOT NULL,
+                         `usertype` ENUM ('Customer', 'Employee', 'Manager') NOT NULL
+);
 
--- Create the user data
-CREATE TABLE IF NOT EXISTS `pc-builder`.`users` (
-                                      `id` INT NOT NULL AUTO_INCREMENT,
-                                      `username` VARCHAR(45) NOT NULL,
-                                      `email` VARCHAR(55) NOT NULL,
-                                      `password` TEXT NOT NULL,
-                                      `usertype` ENUM('Customer', 'Employee', 'Manager') NOT NULL,
-                                      PRIMARY KEY (`id`),
-                                      UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+CREATE TABLE `customer_data` (
+                                 `customer_id` INT PRIMARY KEY NOT NULL,
+                                 `phone_number` VARCHAR(15),
+                                 `country` VARCHAR(45),
+                                 `state` VARCHAR(60),
+                                 `street` VARCHAR(60),
+                                 `city` VARCHAR(60),
+                                 `zip_code` VARCHAR(10)
+);
 
--- Create the data for the customers
-CREATE TABLE IF NOT EXISTS  `pc-builder`.`customer_data` (
-                                              `customer_id` INT NOT NULL,
-                                              `phone_number` VARCHAR(15) NULL,
-                                              `country` VARCHAR(45) NULL,
-                                              `street` VARCHAR(60) NULL,
-                                              `city` VARCHAR(60) NULL,
-                                              `zip_code` VARCHAR(10) NULL,
-                                              PRIMARY KEY (`customer_id`),
-                                              UNIQUE INDEX `customer_id_UNIQUE` (`customer_id` ASC));
+CREATE TABLE `components` (
+                              `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                              `displayName` VARCHAR(45) NOT NULL,
+                              `description` TEXT,
+                              `image` VARCHAR(120),
+                              `price` FLOAT NOT NULL DEFAULT 99999,
+                              `powerneed` INT(3),
+                              `type` VARCHAR(45) NOT NULL,
+                              `tweakers_id` INT(3),
+                              `stock` INT(5) DEFAULT 0
+);
 
--- Link the user data
-ALTER TABLE `pc-builder`.`users` ADD CONSTRAINT `fk_users_id` FOREIGN KEY(`id`)
-    REFERENCES `pc-builder`.`customer_data` (`customer_id`);
+CREATE TABLE `configs` (
+                           `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                           `name` VARCHAR(45) NOT NULL,
+                           `basePrice` DOUBLE DEFAULT 0,
+                           `image` MEDIUMTEXT DEFAULT "https://2.bp.blogspot.com/-H79P8BdgFLo/W07wgghnieI/AAAAAAAAAJc/mSxaHJOYr5wDcrKeCOZAbSK-uBEdTephQCLcBGAs/s1600/komputer_logo.gif",
+                           `description` MEDIUMTEXT
+);
 
--- Setup of the components
+CREATE TABLE `config_components` (
+                                     `config_id` INT NOT NULL,
+                                     `component_id` INT NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS `pc-builder`.`components` (
-                                           `id` INT NOT NULL AUTO_INCREMENT,
-                                           `displayName` VARCHAR(45) NOT NULL,
-                                           `description` TEXT NULL,
-                                           `image` VARCHAR(120) NULL,
-                                           `price` FLOAT NOT NULL DEFAULT 99999,
-                                           `powerneed` INT(3) NULL,
-                                           `type` VARCHAR(45) NOT NULL,
-                                           PRIMARY KEY (`id`),
-                                           UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+CREATE TABLE `orders` (
+                          `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                          `customer_id` INT,
+                          `total_price` double
+);
+
+CREATE TABLE `orders_items` (
+                                `id` INT,
+                                `item_id` INT,
+                                `config_id` INT,
+                                `amount` INT,
+                                `price` DOUBLE
+);
+
+CREATE TABLE `config_item` (
+    `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT
+);
+
+CREATE TABLE `atrticle_item` (
+    `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT
+);
+
+ALTER TABLE `customer_data` ADD FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE `config_components` ADD FOREIGN KEY (`component_id`) REFERENCES `components` (`id`);
+
+ALTER TABLE `config_components` ADD FOREIGN KEY (`config_id`) REFERENCES `configs` (`id`);
+
+ALTER TABLE `orders` ADD FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE `orders_items` ADD FOREIGN KEY (`id`) REFERENCES `orders` (`id`);
+
+ALTER TABLE `orders_items` ADD FOREIGN KEY (`item_id`) REFERENCES `atrticle_item` (`id`);
+
+ALTER TABLE `orders_items` ADD FOREIGN KEY (`config_id`) REFERENCES `config_item` (`id`);
+
+CREATE UNIQUE INDEX `id_UNIQUE` ON `request_log` (`id`);
+
+CREATE UNIQUE INDEX `id_UNIQUE` ON `users` (`id`);
+
+CREATE UNIQUE INDEX `customer_id_UNIQUE` ON `customer_data` (`customer_id`);
+
+CREATE UNIQUE INDEX `id_UNIQUE` ON `components` (`id`);
+
+CREATE UNIQUE INDEX `idconfigsid_UNIQUE` ON `configs` (`id`);
+
+CREATE UNIQUE INDEX `name_UNIQUE` ON `configs` (`name`);

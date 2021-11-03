@@ -1,8 +1,10 @@
 <?php
 
 use PcBuilder\Objects\Component;
+include 'templates/Header.php';
 
-include 'templates/Header.html';
+
+
 ?>
 <link type="text/css" href="/assetes/css/configrator.css" rel="stylesheet">
 
@@ -68,15 +70,15 @@ include 'templates/Header.html';
                     <?php
                 }
 
-                renderData("Cases","case",$cases,"In de behuizing gaan alle onderdelen");
-                renderData("Cpu","cpu",$cpu,"De cpu");
-                renderData("motherboard","motherboard",$motherboard,"");
-                renderData("memory","memory",$memory,"");
-                renderData("storage","storage",$storage,"");
-                renderData("rgb","rgb",$rgb,"");
-                renderData("Dvd speler","dvs",$dvd,"");
+                renderData("Behuizing","case",$cases,"In de behuizing gaan alle onderdelen");
+                renderData("Proccesor","cpu",$cpu,"De cpu is het brein van je computer");
+                renderData("Moederbord","motherboard",$motherboard,"Op het moederbord worden alle onderdelen op aangesloten");
+                renderData("Geheugen","memory",$memory,"Het geheugen is het korte termijn geheugen van je pc");
+                renderData("Opslag","storage",$storage,"De opslag van je pc is om alles op te slaan");
+                renderData("Rgb","rgb",$rgb,"Laat jou pc nu shinen met RGB!");
+                renderData("Dvd speler","dvds",$dvd,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
 
-                renderData("psu","psu",$psu,"");
+                renderData("Voeding","psu",$psu,"De voeding geeft stroom aan je pc deze moet niet te weinig geven");
 
                 ?>
 
@@ -84,6 +86,12 @@ include 'templates/Header.html';
         <div class="col-2"><div id="sideBar" class="sideBar">
                 <div id="priceBox">
                     <p id="finalPrice"></p>
+                    <form method="post">
+                        <input type="hidden" name="pcName" id="pcName" value="<?php echo $name?>">
+                        <input type="hidden" name="config" id="config" value="">
+                        <input type="submit" name="addToCard"
+                               value="addToCard"/>
+                    </form>
                 </div>
             </div></div>
     </div>

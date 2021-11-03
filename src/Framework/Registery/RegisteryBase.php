@@ -27,19 +27,46 @@ class RegisteryBase
     }
 
 
-    public function flasher_success($message){
+    public function flasher_success($message,$settings = []){
+        if(isset($settings)){
+            if(isset($settings['oneTimeSession'])){
+                if(isset($_SESSION[$message])){
+                    return;
+                }else{
+                    $_SESSION[$message] = true;
+                }
+            }
+        }
         echo "<script>";
         echo "window.FlashMessage.success('".$message."');";
         echo "</script>";
     }
 
-    public function flasher_error($message){
+    public function flasher_error($message,$settings = []){
+        if(isset($settings)){
+            if(isset($settings['oneTimeSession'])){
+                if(isset($_SESSION[$message])){
+                    return;
+                }else{
+                    $_SESSION[$message] = true;
+                }
+            }
+        }
         echo "<script>";
         echo "window.FlashMessage.error('".$message."');";
         echo "</script>";
     }
 
-    public function flasher_warning($message){
+    public function flasher_warning($message,$settings = []){
+        if(isset($settings)){
+            if(isset($settings['oneTimeSession'])){
+                if(isset($_SESSION[$message])){
+                    return;
+                }else{
+                    $_SESSION[$message] = true;
+                }
+            }
+        }
         echo "<script>";
         echo "window.FlashMessage.warning('".$message."');";
         echo "</script>";

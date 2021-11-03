@@ -2,6 +2,8 @@
 
 namespace PcBuilder\Framework\Registery;
 
+use PcBuilder\Framework\Execptions\TemplateNotFound;
+
 class Controller
 extends RegisteryBase{
 
@@ -14,7 +16,10 @@ extends RegisteryBase{
     }
 
 
-    public function render($view,$context = [])
+    /**
+     * @throws TemplateNotFound
+     */
+    public function render($view, $context = [])
     {
         $this->getTemplates()->render($view, $context);
     }
@@ -27,4 +32,5 @@ extends RegisteryBase{
     {
         return $this->templates;
     }
+
 }
