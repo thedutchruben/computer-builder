@@ -4,7 +4,7 @@ namespace PcBuilder\Modules\Controllers;
 
 use PcBuilder\Framework\Execptions\TemplateNotFound;
 use PcBuilder\Framework\Registery\Controller;
-use PcBuilder\Modules\Managers\ConfigruatorManager;
+use PcBuilder\Modules\Managers\ConfigurationManager;
 use PcBuilder\Modules\Managers\OrderManager;
 use PcBuilder\Modules\Managers\UserManager;
 

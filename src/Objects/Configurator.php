@@ -17,6 +17,7 @@ class Configurator
     private array $storage= [];
     private array $rgb= [];
     private array $dvd= [];
+    private array $os= [];
 
     /**
      * @return int
@@ -208,5 +209,26 @@ class Configurator
     public function setRgb(array $rgb): void
     {
         $this->rgb = $rgb;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOs(): array
+    {
+        return $this->os;
+    }
+
+    /**
+     * @param array $os
+     */
+    public function setOs(array $os): void
+    {
+        $this->os = $os;
+    }
+
+    public function getAllComponents(){
+        return  array_merge($this->getCases(),$this->getCpu(),$this->getMotherboard(),$this->getMemory(),$this->getOs(),$this->getStorage()
+            ,$this->getGpu(),$this->getRgb(),$this->getPsu(),$this->getDvd());
     }
 }

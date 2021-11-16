@@ -6,7 +6,7 @@ include 'templates/Header.php';
 
 
 ?>
-<link type="text/css" href="/assetes/css/configrator.css" rel="stylesheet">
+<link type="text/css" href="/assets/css/configrator.css" rel="stylesheet">
 
 <div class="container">
     <div class="row">
@@ -75,10 +75,12 @@ include 'templates/Header.php';
                 renderData("Moederbord","motherboard",$motherboard,"Op het moederbord worden alle onderdelen op aangesloten");
                 renderData("Geheugen","memory",$memory,"Het geheugen is het korte termijn geheugen van je pc");
                 renderData("Opslag","storage",$storage,"De opslag van je pc is om alles op te slaan");
+                renderData("Videokaart","dvds",$gpu,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
                 renderData("Rgb","rgb",$rgb,"Laat jou pc nu shinen met RGB!");
                 renderData("Dvd speler","dvds",$dvd,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
-
                 renderData("Voeding","psu",$psu,"De voeding geeft stroom aan je pc deze moet niet te weinig geven");
+                renderData("Os","os",$os,"Laat jou pc nu shinen met RGB!");
+
 
                 ?>
 
@@ -99,4 +101,4 @@ include 'templates/Header.php';
 
 
 
-<script src="/assetes/js/configrator.js"></script>
+<script src="/assets/js/configrator.js"></script>

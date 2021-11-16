@@ -43,10 +43,21 @@ $router = new PcBuilderRouter([
 
     //admin
     new Route('admin_index', '/admin', [AdminController::class,"index"]),
+    //Admin product
     new Route('admin_products', '/admin/products', [AdminController::class,"products"]),
+    new Route('admin_products_create', '/admin/products/create', [AdminController::class,"registerProduct"],['POST','GET']),
+    new Route('admin_products_edit', '/admin/products/edit', [AdminController::class,"registerProduct"],['POST','GET']),
+    new Route('admin_products_delete', '/admin/products/delete/{id}', [AdminController::class,"deleteProduct"]),
+
+    //Admin orders
     new Route('admin_orders', '/admin/orders', [AdminController::class,"orders"]),
+
+    //Admin configs
     new Route('admin_configs', '/admin/configs', [AdminController::class,"configs"]),
-    new Route('admin_config', '/admin/configs/{id}', [AdminController::class,"config"]),
+    new Route('admin_config', '/admin/config/{id}', [AdminController::class,"config"]),
+    new Route('admin_config_create', '/admin/config/create', [AdminController::class,"createConfig"], ['POST','GET']),
+    new Route('admin_config_save', '/admin/config/{id}/save', [AdminController::class,"saveConfig"], ['POST']),
+
 ]);
 
 
@@ -83,4 +94,19 @@ try {
         "errorName" => $exception->getMessage()
     ]);
 
+}
+
+
+//Render flashers
+if(isset($_SESSION['messages'])){
+    foreach ($_SESSION['messages'] as $message){
+        if(isset($message['showTill'])){
+            if(!$message['showTill'] <= microtime(true)){
+                return;
+            }
+        }
+        echo "<script>";
+        echo "window.FlashMessage.success('".$message."');";
+        echo "</script>";
+    }
 }

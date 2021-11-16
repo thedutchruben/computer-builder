@@ -25,11 +25,11 @@ function getShoppingCard() :ShoppingCard
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="/assetes/img/faicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assetes/img/faicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assetes/img/faicon/favicon-16x16.png">
-    <link rel="manifest" href="/assetes/img/faicon/site.webmanifest">
-    <link rel="mask-icon" href="/assetes/img/faicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/faicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/faicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/faicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/img/faicon/site.webmanifest">
+    <link rel="mask-icon" href="/assets/img/faicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
@@ -37,14 +37,14 @@ function getShoppingCard() :ShoppingCard
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PcBuilder Site</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/assetes/js/flash.min.js"></script>
+    <script src="/assets/js/flash.min.js"></script>
     <script src="https://kit.fontawesome.com/2baef102dd.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="/assetes/css/base.css">
-    <link rel="stylesheet" type="text/css" href="/assetes/css/header.css">
-    <link rel="stylesheet" type="text/css" href="/assetes/css/flash.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/flash.min.css">
 
 </head>
 <body>
@@ -52,7 +52,7 @@ function getShoppingCard() :ShoppingCard
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a href="/">
-                <img class="navbar-brand"  src="/assetes/img/logo/logo_white_large.png" height="auto" width="280">
+                <img class="navbar-brand"  src="/assets/img/logo/logo_white_large.png" height="auto" width="280">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,9 +99,9 @@ function getShoppingCard() :ShoppingCard
                         echo $item->getName();
                         echo $item instanceof ConfigrationOrderItem;
                         if($item instanceof ConfigrationOrderItem){
-                            foreach ($item->getComponents() as $component){
-                                echo $component . "<br>";
-                            }
+//                            foreach ($item->getComponents() as $component){
+//                                echo $component . "<br>";
+//                            }
                         }
                     }
                 ?>

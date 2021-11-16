@@ -33,6 +33,18 @@ class OrderItem
         $this->price += $price;
     }
 
+    function resetPrice(){
+        $this->price = 0;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
     /**
      * @param string $name
      */

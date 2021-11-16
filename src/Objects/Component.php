@@ -60,8 +60,20 @@ class Component
      */
     public function getImage(): string
     {
+        if(str_starts_with($this->image,"http")){
+            return $this->image;
+        }
+        return "/".$this->image;
+    }
+
+    /**
+     * @return String
+     */
+    public function getRawImage(): string
+    {
         return $this->image;
     }
+
 
     /**
      * @return float
