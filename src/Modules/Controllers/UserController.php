@@ -12,13 +12,11 @@ class UserController extends Controller
 {
 
     private UserManager $userManager;
-    private CustomerController $customerController;
 
     public function __construct()
     {
         parent::__construct();
         $this->userManager = new UserManager();
-        $this->customerController = new CustomerController();
     }
 
     /**
@@ -33,9 +31,15 @@ class UserController extends Controller
         }
         if (isset($_POST['password'])) {
             $data = $this->userManager->login($_POST);
-            if($data['succes']){
-                $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-                header('Location: '.$actual_link ."/customer");
+            if($data['success']){
+                if(isset($_POST['gotoPage'])){
+                    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                    header('Location: '.$actual_link ."/".$_POST['gotoPage']);
+                }else{
+                    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                    header('Location: '.$actual_link ."/customer");
+                }
+
             }else{
                 $this->render("\account\Login.php");
                 $this->flasher_error(
@@ -53,7 +57,7 @@ class UserController extends Controller
     public function register(){
         if (isset($_POST['email'])) {
             $data = $this->userManager->register($_POST);
-            if($data['succes']){
+            if($data['success']){
                 $this->login();
             }else{
                 $this->render("\account\Register.php");

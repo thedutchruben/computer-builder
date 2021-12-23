@@ -9,7 +9,7 @@ include 'templates/Header.php';
         <h2 class="header">Er is een error opgetreden!</h2>
         <h3><?php echo $errorName; ?></h3>
         <p>Mocht dit vaker voor komen geef dan dit nummer door aan de klanten service :</p>
-        <code id="errorNumber"></code>
+        <code style="justify-content: center;" id="errorNumber"></code>
     </div>
 
 </div>

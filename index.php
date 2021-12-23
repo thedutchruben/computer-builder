@@ -30,6 +30,8 @@ $router = new PcBuilderRouter([
 
     //card routing
     new Route('card', '/card', [IndexController::class,"card"]),
+    new Route('checkout', '/checkout', [IndexController::class,"checkout"],['GET']),
+    new Route('checkout_pay', '/checkout', [IndexController::class,"checkout_post"],['POST']),
 
 
     //Account Routing
@@ -46,11 +48,14 @@ $router = new PcBuilderRouter([
     //Admin product
     new Route('admin_products', '/admin/products', [AdminController::class,"products"]),
     new Route('admin_products_create', '/admin/products/create', [AdminController::class,"registerProduct"],['POST','GET']),
-    new Route('admin_products_edit', '/admin/products/edit', [AdminController::class,"registerProduct"],['POST','GET']),
-    new Route('admin_products_delete', '/admin/products/delete/{id}', [AdminController::class,"deleteProduct"]),
+    new Route('admin_products_edit', '/admin/products/{id}/edit', [AdminController::class,"editProduct"],['GET']),
+    new Route('admin_products_delete', '/admin/products/{id}/delete', [AdminController::class,"deleteProduct"]),
+    new Route('admin_products_update', '/admin/products/update', [AdminController::class,"updateProduct"],['POST']),
 
     //Admin orders
     new Route('admin_orders', '/admin/orders', [AdminController::class,"orders"]),
+    new Route('admin_order', '/admin/order/{id}', [AdminController::class,"orderInfo"]),
+    new Route('admin_order_update', '/admin/order/{id}/update', [AdminController::class,"updateOrder"]),
 
     //Admin configs
     new Route('admin_configs', '/admin/configs', [AdminController::class,"configs"]),
@@ -86,7 +91,6 @@ try {
     ]);
 } catch (Exception $exception){
     $template = new Template($_SERVER['DOCUMENT_ROOT'] .'\pages', []);
-    echo $_ENV['APP_ENV'] ;
     if($_ENV['APP_ENV'] == "dev"){
         var_dump($exception);
     }
@@ -99,14 +103,32 @@ try {
 
 //Render flashers
 if(isset($_SESSION['messages'])){
-    foreach ($_SESSION['messages'] as $message){
-        if(isset($message['showTill'])){
-            if(!$message['showTill'] <= microtime(true)){
+    foreach ($_SESSION['messages' ] as $message){
+        if(isset($message['data']->getOptions()['oneTimeSession'])) return;
+        if(isset($message['data']->getOptions()['showTill'])){
+            if($message['data']->getOptions()['showTill'] <= microtime(true)){
                 return;
             }
         }
-        echo "<script>";
-        echo "window.FlashMessage.success('".$message."');";
-        echo "</script>";
+        var_dump($message['data']);
+        switch ($message['data']['type']){
+            case "success":
+                echo "<script>";
+                echo "window.FlashMessage.success('".$message['data']->getText()."');";
+                echo "</script>";
+                break;
+            case "warning":
+                echo "<script>";
+                echo "window.FlashMessage.warning('".$message['data']->getText()."');";
+                echo "</script>";
+                break;
+            case "error":
+                echo "<script>";
+                echo "window.FlashMessage.error('".$message['data']->getText()."');";
+                echo "</script>";
+                break;
+        }
+
     }
 }
+

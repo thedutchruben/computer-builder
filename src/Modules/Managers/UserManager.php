@@ -14,7 +14,7 @@ class UserManager extends Manager
         $password = password_hash($vars['password'],PASSWORD_DEFAULT);
         if($this->emailInUse($email)){
             return [
-                "succes" => false,
+                "success" => false,
                 "message" => "Email already in use"
             ];
         }
@@ -40,20 +40,33 @@ class UserManager extends Manager
         ]);
 
          return [
-             "succes" => true
+             "success" => true
          ];
     }
 
     public function login($vars = []) : array
     {
         $email = $vars['email'];
-        $password = password_hash($vars['password'],PASSWORD_DEFAULT);
+//        $password = password_hash($vars['password'],PASSWORD_DEFAULT);
 
+        if(!$this->emailInUse($email)){
+            return [
+                "success" => false,
+                "message" => "The login credentials are incorrect"
+            ];
+        }
 
-        $_SESSION["loggedin"] = true;
+        if($this->checkLogin($email,$vars['password'])){
+            $_SESSION["loggedin"] = true;
+            return [
+                "success" => true,
+                "message" => "Login success full"
+            ];
+        }
+
         return [
-            "succes" => true,
-            "message" => "Wrong password"
+            "success" => false,
+            "message" => "The login credentials are incorrect"
         ];
     }
 
@@ -61,7 +74,7 @@ class UserManager extends Manager
     public function emailInUse($email) : bool
     {
 
-        $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `users` WHERE `email` = :email;");
+        $statement = $this->getMysql()->getPdo()->prepare("SELECT `email` FROM `users` WHERE `email` = :email;");
         $statement->execute([
             ":email" =>  $email
         ]);
@@ -70,6 +83,24 @@ class UserManager extends Manager
         }
         return false;
     }
+
+    public function checkLogin($email,$password) : bool
+    {
+
+        $statement = $this->getMysql()->getPdo()->prepare("SELECT `email` , `password` FROM `users` WHERE `email` = :email");
+        $statement->execute([
+            ":email" =>  $email
+        ]);
+        if($statement->rowCount() == 1){
+            $row = $statement->fetch();
+            if(password_verify($password,$row['password'])){
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 
     public function is_authenticated() : bool
     {

@@ -2,6 +2,10 @@
 
 namespace PcBuilder\Objects;
 
+/**
+ * @version 1.0
+ * @author Ruben de Roos
+ */
 class Component
 {
     private int $id;
@@ -11,6 +15,8 @@ class Component
     private float $price = 9999;
     private int $powerNeed;
     private String $type;
+    private int $tweakersId;
+    private bool $enabled;
 
     /**
      * @param int $id
@@ -45,6 +51,25 @@ class Component
     public function setDisplayName(string $displayName): void
     {
         $this->displayName = $displayName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTweakersId(): int
+    {
+        if(!isset($this->tweakersId)){
+            return 0;
+        }
+        return $this->tweakersId;
+    }
+
+    /**
+     * @param int $tweakersId
+     */
+    public function setTweakersId(int $tweakersId): void
+    {
+        $this->tweakersId = $tweakersId;
     }
 
     /**
@@ -146,6 +171,24 @@ class Component
     {
         $this->type = $type;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
+    }
+
+
 }
 
 

@@ -18,6 +18,14 @@ class Order
      */
     private array $items;
 
+    private string $status;
+
+    private float $totalPrice;
+
+    private bool $paid;
+
+    private string $orderDate;
+
     /**
      * @param int $id
      * @param int $customerId
@@ -29,6 +37,8 @@ class Order
         $this->customerId = $customerId;
         $this->items = $items;
     }
+
+
 
 
     /**
@@ -79,8 +89,69 @@ class Order
         $this->items = $items;
     }
 
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
 
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
 
+    /**
+     * @return float
+     */
+    public function getTotalPrice(): float
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param float $totalPrice
+     */
+    public function setTotalPrice(float $totalPrice): void
+    {
+        $this->totalPrice = $totalPrice;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return $this->paid;
+    }
+
+    /**
+     * @param bool $paid
+     */
+    public function setPaid(bool $paid): void
+    {
+        $this->paid = $paid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderDate(): string
+    {
+        return $this->orderDate;
+    }
+
+    /**
+     * @param string $orderDate
+     */
+    public function setOrderDate(string $orderDate): void
+    {
+        $this->orderDate = $orderDate;
+    }
 
 
 }

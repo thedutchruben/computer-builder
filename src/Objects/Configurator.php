@@ -2,24 +2,79 @@
 
 namespace PcBuilder\Objects;
 
+/**
+ * The configurator class contains all the data of the configurator
+ * @version 1.0
+ * @author Ruben de Roos
+ */
 class Configurator
 {
 
+    /**
+     * @var int The database id of the configurator
+     */
     private int $id;
+    /**
+     * @var String The name of the configurator
+     */
     private String $name;
+    /**
+     * @var String The description of the configurator
+     */
     private String $description;
+    /**
+     * @var array All the cases that are selected for the configurator
+     */
     private array $cases= [];
+    /**
+     * @var array All the processors that are selected for the configurator
+     */
     private array $cpu = [];
+    /**
+     * @var array All the motherboards that are selected for the configurator
+     */
     private array $motherboard= [];
+    /**
+     * @var array All the gpu's that are selected for the configurator
+     */
     private array $gpu= [];
+    /**
+     * @var array All the memory that is selected for the configurator
+     */
     private array $memory= [];
+    /**
+     * @var array All the psu's that are selected for the configurator
+     */
     private array $psu= [];
+    /**
+     * @var array All the storage that is selected for the configurator
+     */
     private array $storage= [];
+    /**
+     * @var array All the rgb that is selected for the configurator
+     */
     private array $rgb= [];
+    /**
+     * @var array All the dvd player's that are selected for the configurator
+     */
     private array $dvd= [];
+    /**
+     * @var array All the os'es that are selected for the configurator
+     */
     private array $os= [];
 
     /**
+     * Create an {@link Configurator} object
+     * @param int $id the if of the configurator
+     */
+    public function __construct(int $id)
+    {
+        $this->id = $id;
+    }
+
+
+    /**
+     * Get the id of the configurator
      * @return int
      */
     public function getId(): int
@@ -28,14 +83,7 @@ class Configurator
     }
 
     /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
+     * Get the name of the configurator
      * @return String
      */
     public function getName(): string
@@ -44,6 +92,7 @@ class Configurator
     }
 
     /**
+     * Set the name of the configurator
      * @param String $name
      */
     public function setName(string $name): void
@@ -52,6 +101,7 @@ class Configurator
     }
 
     /**
+     * Get the description of the configurator
      * @return String
      */
     public function getDescription(): string
@@ -68,7 +118,7 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * @return array
      */
     public function getCases(): array
     {
@@ -76,7 +126,7 @@ class Configurator
     }
 
     /**
-     * @param Array $cases
+     * @param array $cases
      */
     public function setCases(array $cases): void
     {
@@ -84,7 +134,7 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * @return array
      */
     public function getCpu(): array
     {
@@ -92,7 +142,7 @@ class Configurator
     }
 
     /**
-     * @param Array $cpu
+     * @param array $cpu
      */
     public function setCpu(array $cpu): void
     {
@@ -100,7 +150,7 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * @return array
      */
     public function getMotherboard(): array
     {
@@ -108,7 +158,7 @@ class Configurator
     }
 
     /**
-     * @param Array $motherboard
+     * @param array $motherboard
      */
     public function setMotherboard(array $motherboard): void
     {
@@ -116,7 +166,7 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * @return array
      */
     public function getGpu(): array
     {
@@ -124,7 +174,7 @@ class Configurator
     }
 
     /**
-     * @param Array $gpu
+     * @param array $gpu
      */
     public function setGpu(array $gpu): void
     {
@@ -227,6 +277,10 @@ class Configurator
         $this->os = $os;
     }
 
+    /**
+     * Get all the components items that the configurator has
+     * @return array with all the components
+     */
     public function getAllComponents(){
         return  array_merge($this->getCases(),$this->getCpu(),$this->getMotherboard(),$this->getMemory(),$this->getOs(),$this->getStorage()
             ,$this->getGpu(),$this->getRgb(),$this->getPsu(),$this->getDvd());

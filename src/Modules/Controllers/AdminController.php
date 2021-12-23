@@ -3,7 +3,9 @@
 namespace PcBuilder\Modules\Controllers;
 
 use PcBuilder\Framework\Registery\Controller;
+use PcBuilder\Modules\Managers\ComponentManager;
 use PcBuilder\Modules\Managers\ConfigurationManager;
+use PcBuilder\Modules\Managers\OrderManager;
 use PcBuilder\Modules\Managers\UserManager;
 use PcBuilder\Objects\Component;
 use PcBuilder\Objects\Configurator;
@@ -12,6 +14,8 @@ class AdminController extends Controller
 {
     private UserManager $userManager;
     private ConfigurationManager $configurationManager;
+    private OrderManager $orderManager;
+    private ComponentManager $componentManager;
 
 
     public function __construct()
@@ -19,6 +23,8 @@ class AdminController extends Controller
         parent::__construct();
         $this->userManager = new UserManager();
         $this->configurationManager = new ConfigurationManager();
+        $this->orderManager = new OrderManager();
+        $this->componentManager = new ComponentManager();
     }
 
 
@@ -26,7 +32,52 @@ class AdminController extends Controller
      * Route : /admin
      */
     public function index(){
-        $this->render('\admin\AdminIndex.php');
+        $wrongPrice = [];
+        $notAllLoaded = false;
+        $notLoader = 0;
+        $notBuyAble = 0;
+        foreach ($this->componentManager->getComponents() as $component){
+            $currentPrice = $this->configurationManager->getCurrentPrice($component);
+            if($currentPrice == "Price timeout"){
+                $notAllLoaded = true;
+                $notLoader++;
+            }else{
+                if($currentPrice == "No Price"){
+                    $notBuyAble++;
+                    array_push($wrongPrice,[
+                        'id' => $component->getId(),
+                        'name' => $component->getDisplayName(),
+                        'price' => "not Available",
+                        'currentPrice' => doubleval($currentPrice)
+                    ]);
+                }else if(doubleval($currentPrice) > doubleval($component->getPrice())){
+                    array_push($wrongPrice,[
+                        'id' => $component->getId(),
+                        'name' => $component->getDisplayName(),
+                        'price' => $component->getPrice(),
+                        'currentPrice' => doubleval($currentPrice)
+                    ]);
+
+                }
+            }
+
+        }
+        $this->render('\admin\AdminIndex.php',[
+            'wrongPrice' => $wrongPrice,
+            'openOrders' => $this->orderManager->getOpenOrderCount(),
+            'productionOrders' => $this->orderManager->getProductionOrderCount()
+        ]);
+        if($notAllLoaded){
+            $this->flasher_error("<h2>Error</h2><br><p>Not all data is loaded right! (".$notLoader.")</p>");
+        }
+    }
+
+    public function editProduct($id){
+        $component = $this->componentManager->getComponent($id);
+        $this->render('\admin\Product.php',[
+            'component' => $component,
+            'currentPrice' =>  $this->configurationManager->getCurrentPrice($component)
+        ]);
     }
 
     /**
@@ -35,7 +86,7 @@ class AdminController extends Controller
     public function products(){
         $this->render('\admin\Products.php',
             [
-                "components" => $this->configurationManager->getComponents(),
+                "components" => $this->componentManager->getComponents(false),
             ]);
     }
 
@@ -50,6 +101,17 @@ class AdminController extends Controller
     }
 
     /**
+     * Route : /admin/orders
+     */
+    public function orders(){
+        $this->render('\admin\Orders.php',
+            [
+                "orders" => $this->orderManager->getOrders(),
+            ]);
+    }
+
+
+    /**
      * Route: /admin/product/create
      *
      */
@@ -61,9 +123,9 @@ class AdminController extends Controller
         $comp->setPowerNeed($_POST['power']);
         $comp->setType($_POST['type']);
         if(isset($_POST['enabled'])){
-            $this->configurationManager->createComponent($comp,$_POST['tweakersid'],true);
+            $this->componentManager->createComponent($comp,$_POST['tweakersid'],true);
         }else{
-            $this->configurationManager->createComponent($comp,$_POST['tweakersid'],false);
+            $this->componentManager->createComponent($comp,$_POST['tweakersid'],false);
 
         }
         $file_name = $_FILES['image']['name'];
@@ -85,7 +147,7 @@ class AdminController extends Controller
         $file_name = $_FILES['image']['name'];
         $file_tmp = $_FILES['image']['tmp_name'];
         move_uploaded_file($file_tmp,"assets/uploads/".$file_name);
-        $config = new Configurator();
+        $config = new Configurator(-1);
         $config->setName($_POST['name']);
         $config->setDescription($_POST['description']);
         $this->configurationManager->createConfig($config,$_POST['price'],"assets/uploads/".$_FILES['image']['name']);
@@ -100,17 +162,20 @@ class AdminController extends Controller
         }else{
             foreach ($_POST['component'] as $comp){
                 if(!in_array($comp,$config->getAllComponents())){
-                    $this->configurationManager->addConfigOption($id,$comp);
-                    $this->flasher_success("<p>Item Added</p>");
+                    $this->componentManager->addConfigOption($id,$comp);
+                    $this->flasher_success("<p>Item Added</p>",
+                        [
+                            'showTill' => microtime(true) + 20
+                        ]);
                 }
             }
 
             foreach ($config->getAllComponents() as $comp){
                 if(!in_array($comp,$_POST['component'])){
-                    $this->configurationManager->removeConfigOption($id,$comp);
+                    $this->componentManager->removeConfigOption($id,$comp);
                     $this->flasher_success("<p>Item removed</p>",
                     [
-                        'showTill' => microtime(true) + 10000
+                        'showTill' => microtime(true) + 20
                     ]);
                 }
             }
@@ -118,5 +183,37 @@ class AdminController extends Controller
 
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         header('Location: '.$actual_link ."/admin/config/".$id);
+    }
+
+    public function updateProduct(){
+        var_dump($_POST);
+        $component = new Component($_POST['id'],$_POST['name']);
+        $component->setDescription($_POST['description']);
+        $component->setImage($_POST['image']);
+        $component->setPrice($_POST['price']);
+        $component->setPowerNeed($_POST['power']);
+        $component->setType($_POST['type']);
+        $component->setTweakersId($_POST['tweakersid']);
+        $active = false;
+        if(isset($_POST['enabled'])){
+            $active = true;
+        }
+
+        $component->setEnabled($active);
+        $this->componentManager->updateComponent($component);
+        $this->flasher_success("<p>Item Updated</p>",
+            [
+                'showTill' => microtime(true) + 20
+            ]);
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        header('Location: '.$actual_link ."/admin/products/");
+    }
+
+    public function orderInfo($id){
+        var_dump($this->orderManager->getOrder($id));
+        $this->render('\admin\Order.php',
+            [
+                "order" => $this->orderManager->getOrder($id),
+            ]);
     }
 }

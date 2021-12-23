@@ -37,7 +37,7 @@ include 'templates/Header.php';
                                 <div id="<?php echo $id.$ca->getId() ?>"  data-category="<?php echo $id?>" data-price="<?php echo $ca->getPrice() ?>" data-id="<?php echo $ca->getId() ?>" class="card mb-3" style="max-width: 300px; margin-right: 5px;border:1px solid;margin-bottom: 0px !important;">
                                     <div class="row g-0">
                                         <div class="col-md-4">
-                                            <img src="<?php echo $ca->getImage()?>" class="img-fluid rounded-start" alt="<?php echo $ca->getDisplayName()?>">
+                                            <img src="<?php echo $ca->getImage()?>" loading="lazy" class="img-fluid rounded-start" alt="<?php echo $ca->getDisplayName()?>">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
@@ -75,7 +75,11 @@ include 'templates/Header.php';
                 renderData("Moederbord","motherboard",$motherboard,"Op het moederbord worden alle onderdelen op aangesloten");
                 renderData("Geheugen","memory",$memory,"Het geheugen is het korte termijn geheugen van je pc");
                 renderData("Opslag","storage",$storage,"De opslag van je pc is om alles op te slaan");
-                renderData("Videokaart","dvds",$gpu,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
+                for ($i = 0;$i <= intval($storageCount); $i++){
+                    renderData("Opslag".$i,"storage".$i,$storage1,"De opslag van je pc is om alles op te slaan");
+                }
+
+                renderData("Videokaart","gpu",$gpu,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
                 renderData("Rgb","rgb",$rgb,"Laat jou pc nu shinen met RGB!");
                 renderData("Dvd speler","dvds",$dvd,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
                 renderData("Voeding","psu",$psu,"De voeding geeft stroom aan je pc deze moet niet te weinig geven");

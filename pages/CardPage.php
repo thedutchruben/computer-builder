@@ -1,17 +1,19 @@
 <?php
 
+use PcBuilder\Modules\Managers\ComponentManager;
 use PcBuilder\Modules\Managers\ConfigurationManager;
 use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
 
 $configruatorManager = new ConfigurationManager();
+$componentManager = new ComponentManager();
 
 
 include 'templates/Header.php';
 
-foreach (getShoppingCard()->getItems() as $item){
+foreach (getShoppingCart()->getItems() as $item){
     $item->resetPrice();
     foreach ($item->getComponents() as $component){
-        $item->addPrice($configruatorManager->getPrice($component));
+        $item->addPrice($componentManager->getPrice($component));
     }
 }
 
@@ -22,14 +24,14 @@ foreach (getShoppingCard()->getItems() as $item){
             <ol class="list-group">
             <?php
             $total = 0;
-              foreach (getShoppingCard()->getItems() as $item){
+              foreach (getShoppingCart()->getItems() as $item){
                   echo "<li class='list-group-item'>";
                   echo "<div class='fw-bold' style='font-size: 20px'>". $item->getName() . "<button type='button' class='btn btn-error'>Remove</button></div><br>";
                   if($item instanceof ConfigrationOrderItem){
                       $total += ($item->getPrice());
                       foreach ($item->getComponents() as $component){
-                          if($configruatorManager->getComponent($component) != null){
-                              echo "<a>- " .$configruatorManager->getComponent($component)->getDisplayName() . "</a><br>";
+                          if($componentManager->getComponent($component) != null){
+                              echo "<a>- " .$componentManager->getComponent($component)->getDisplayName() . "</a><br>";
                           }
                       }
                   }
@@ -42,7 +44,7 @@ foreach (getShoppingCard()->getItems() as $item){
                 <?php
                     echo "<p>Total : ".floatval($total)."</p>";
                 ?>
-                <button>Checkout</button>
+                <a class="btn btn-success" href="/checkout/">Checkout</a>
             </form>
         </div>
     </div>

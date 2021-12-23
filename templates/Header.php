@@ -2,23 +2,23 @@
 
 use PcBuilder\Modules\Managers\UserManager;
 use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
-use PcBuilder\Objects\ShoppingCard;
+use PcBuilder\Objects\ShoppingCart;
 
 $userManager = new UserManager();
-function addItemToCard($item){
-    //ShoppingCard
-    if(!isset($_SESSION['shopping-card'])){
-        $_SESSION['shopping-card'] = new ShoppingCard();
+function addItemToCart($item){
+    //ShoppingCart
+    if(!isset($_SESSION['shopping-cart'])){
+        $_SESSION['shopping-cart'] = new ShoppingCart();
     }
-    $_SESSION['shopping-card']->addItem($item);
+    $_SESSION['shopping-cart']->addItem($item);
 }
 
-function getShoppingCard() :ShoppingCard
+function getShoppingCart() :ShoppingCart
 {
-    if(!isset($_SESSION['shopping-card'])){
-        $_SESSION['shopping-card'] = new ShoppingCard();
+    if(!isset($_SESSION['shopping-cart'])){
+        $_SESSION['shopping-cart'] = new ShoppingCart();
     }
-    return $_SESSION['shopping-card'];
+    return $_SESSION['shopping-cart'];
 }
 ?>
 
@@ -72,7 +72,7 @@ function getShoppingCard() :ShoppingCard
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
                     </svg>
-                    Cart(<?php echo sizeof(getShoppingCard()->getItems())?>)
+                    Cart(<?php echo sizeof(getShoppingCart()->getItems())?>)
                 </button>
                 <?php if($userManager->is_authenticated()){ ?>
                     <a style="margin-left: 10px;" class="btn btn-outline-info" href="/customer">Mijn account</a>
@@ -95,7 +95,7 @@ function getShoppingCard() :ShoppingCard
             </div>
             <div class="modal-body">
                 <?php
-                    foreach (getShoppingCard()->getItems() as $item){
+                    foreach (getShoppingCart()->getItems() as $item){
                         echo $item->getName();
                         echo $item instanceof ConfigrationOrderItem;
                         if($item instanceof ConfigrationOrderItem){

@@ -13,7 +13,7 @@ class OrderItem
      * @param string $name
      * @param int $amount
      */
-    public function __construct(string $name,int $amount)
+    public function __construct(string $name,int $amount = 1)
     {
         $this->name = $name;
         $this->amount = $amount;

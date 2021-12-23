@@ -1,5 +1,9 @@
-<?php include 'templates/AdminHeader.php';
-$manager = new \PcBuilder\Modules\Managers\ConfigurationManager();
+<?php
+
+use PcBuilder\Modules\Managers\ComponentManager;
+
+include 'templates/AdminHeader.php';
+$manager = new ComponentManager();
 ?>
 <div class="container">
     <div class="row">

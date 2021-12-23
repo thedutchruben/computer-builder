@@ -10,6 +10,8 @@ class ConfigrationOrderItem extends OrderItem
     private array $components;
 
     /**
+     * @param string $name
+     * @param int $amount
      * @param array $components
      */
     public function __construct(string $name,int $amount,array $components)
@@ -33,23 +35,5 @@ class ConfigrationOrderItem extends OrderItem
     {
         $this->components = $components;
     }
-
-    /**
-     * @return int
-     */
-    public function getAmount(): int
-    {
-        return $this->amount;
-    }
-
-    /**
-     * @param int $amount
-     */
-    public function setAmount(int $amount): void
-    {
-        $this->amount = $amount;
-    }
-
-
 
 }

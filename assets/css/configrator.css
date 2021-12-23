@@ -1,10 +1,5 @@
-*{
-    /*overflow-x: hidden;*/
-}
 .card-group {
     display: flex;
-    /*flex-wrap: nowrap;*/
-    overflow-x: auto  !important;
     -webkit-overflow-scrolling: touch  !important;
     -ms-overflow-style: -ms-autohiding-scrollbar !important;
     overflow: auto;

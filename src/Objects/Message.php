@@ -7,6 +7,23 @@ class Message
 
     private string $text;
     private array $options;
+    private string $type;
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
 
     /**
      * @return string

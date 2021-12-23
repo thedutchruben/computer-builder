@@ -1,5 +1,5 @@
 <?php include 'templates/AdminHeader.php' ?>
-<script src="/assets/js/ckeditor/ckeditor.js"></script>
+<script src="https://cdn.tiny.cloud/1/6j1opp2yddudbj6wt1jh2607ehxrwywtlxb5ueicuymojyrl/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <table class="table table-striped table-dark">
     <thead>
     <tr>
@@ -69,5 +69,5 @@
 </div>
 
 <script>
-    CKEDITOR.replace( 'description' );
+    CKEDITOR.replace('description');
 </script>

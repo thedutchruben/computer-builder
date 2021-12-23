@@ -1,6 +1,6 @@
 <?php
 
-namespace PcBuilder\Objects;
+namespace PcBuilder\Objects\User;
 
 /**
  * The user is a customer with this we can track who orderd what
