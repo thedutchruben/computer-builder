@@ -209,9 +209,11 @@ class AdminController extends Controller
     }
 
     public function orderInfo($id){
+        $order = $this->orderManager->getOrder($id);
         $this->render('\admin\Order.php',
             [
-                "order" => $this->orderManager->getOrder($id),
+                "order" => $order,
+                "customer" => $this->userManager->getUser($order->getCustomerId())
             ]);
     }
 }

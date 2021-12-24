@@ -3,9 +3,28 @@
 namespace PcBuilder\Modules\Managers;
 
 use PcBuilder\Framework\Registery\Manager;
+use PcBuilder\Objects\User\User;
 
 class UserManager extends Manager
 {
+
+    public function getUser($id) : ?User
+    {
+        $user = new User();
+        $statement = $this->getMysql()->getPdo()->prepare("SELECT `id`, `username`, `email`, `usertype` FROM `users` WHERE `id` = :ID");
+        $statement->execute([
+            ':ID' => $id
+        ]);
+
+        $row =  $statement->fetch();
+        $user->setId($id);
+        $user->setUsername($row['username']);
+        $user->setEmail($row['email']);
+        $user->setUserType($row['usertype']);
+
+
+        return $user;
+    }
 
     public function register($vars = []) : array
     {
@@ -39,9 +58,9 @@ class UserManager extends Manager
             ":ZIP" => $vars['zipcode'],
         ]);
 
-         return [
-             "success" => true
-         ];
+        return [
+            "success" => true
+        ];
     }
 
     public function login($vars = []) : array

@@ -19,6 +19,8 @@ function strbool($value): string
                 <div class="col-6">
                     <p>Status : <?php echo $order->getStatus()?></p>
                     <p>Paid : <?php echo strbool($order->isPaid())?></p>
+                    <p>Name : <?php echo $customer->getUserName() ?></p>
+                    <p>Email : <?php echo $customer->getEmail() ?></p>
                 </div>
                 <div class="col-6">
                     <form action="/sdkjnflawsujdnfgpoasdjnfgpoasdng" method="post" class="row g-3">

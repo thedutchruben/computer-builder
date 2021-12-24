@@ -8,9 +8,46 @@ namespace PcBuilder\Objects\User;
  */
 class User
 {
+    /**
+     * @var int
+     */
     private int $id;
+    /**
+     * @var String
+     */
     private String $username;
+    /**
+     * @var String
+     */
     private String $email;
+    /**
+     * @var String
+     */
+    private String $phoneNumber;
+    /**
+     * @var String
+     */
+    private String $country;
+    /**
+     * @var String
+     */
+    private String $street;
+    /**
+     * @var String
+     */
+    private String $state;
+    /**
+     * @var String
+     */
+    private String $city;
+    /**
+     * @var String
+     */
+    private String $zipcode;
+    /**
+     * @var String
+     */
+    private String $userType;
 
     /**
      * Get the id of the user
@@ -65,5 +102,116 @@ class User
         $this->email = $email;
     }
 
+    /**
+     * @return String
+     */
+    public function getPhoneNumber(): string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param String $phoneNumber
+     */
+    public function setPhoneNumber(string $phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return String
+     */
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param String $country
+     */
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return String
+     */
+    public function getStreet(): string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @param String $street
+     */
+    public function setStreet(string $street): void
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return String
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param String $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return String
+     */
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param String $city
+     */
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return String
+     */
+    public function getZipcode(): string
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param String $zipcode
+     */
+    public function setZipcode(string $zipcode): void
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @param String $userType
+     */
+    public function setUserType(string $userType): void
+    {
+        $this->userType = $userType;
+    }
+
+    /**
+     * @return String
+     */
+    public function getUserType(): string
+    {
+        return $this->userType;
+    }
 
 }
