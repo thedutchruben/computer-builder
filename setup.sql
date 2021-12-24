@@ -70,6 +70,7 @@ CREATE TABLE `orders_items` (
 
 CREATE TABLE `config_item` (
                                `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                               `name` varchar(255),
                                `created` date
 );
 

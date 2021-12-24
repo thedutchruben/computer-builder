@@ -11,7 +11,7 @@ use PcBuilder\Objects\User\User;
 
 class OrderManager extends Manager
 {
-    private $componentManager;
+    private ComponentManager $componentManager;
 
     public function __construct()
     {
@@ -38,16 +38,22 @@ class OrderManager extends Manager
             $order->setId($orderId);
             foreach ($items as $item){
                 if($item instanceof ConfigrationOrderItem){
-                    $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `config_item`(`created`) VALUES (CURRENT_DATE);");
-                    $statement->execute();
+                    $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `config_item`(`created`,`name`) VALUES (CURRENT_DATE,:CONFIGNAME);");
+                    $statement->execute([
+                        ":CONFIGNAME" => $item->getName()
+                    ]);
                     $config_item_id = $this->getMysql()->getPdo()->lastInsertId();
                     foreach ($item->getComponents() as $component){
                         $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `config_item_items`(`id`, `component_type` ,`component_id`) VALUES (:CONFIGID,:COMPONENTTYPE,:COMPONENTID);");
-                        $statement->execute([
-                            ":CONFIGID" =>  $config_item_id,
-                            ":COMPONENTTYPE" => $this->componentManager->getComponent($component)->getType(),
-                            ":COMPONENTID" =>  $component
-                        ]);
+                        $componentObject = $this->componentManager->getComponent($component);
+                        if($componentObject != null){
+                            $statement->execute([
+                                ":CONFIGID" =>  $config_item_id,
+                                ":COMPONENTTYPE" => $componentObject->getType(),
+                                ":COMPONENTID" =>  $component
+                            ]);
+                        }
+
                     }
                     $statement = $this->getMysql()->getPdo()->
                     prepare("INSERT INTO `orders_items`(`id`, `item_id`, `config_id`, `amount`, `price`) VALUES (:ORDERID,null,:CONFIGID,:AMOUNT,:PRICE)");
@@ -143,8 +149,33 @@ class OrderManager extends Manager
             $statement->execute([
                 ':ID' => $id,
             ]);
-            foreach ($statement->fetchAll() as $row){
 
+            foreach ($statement->fetchAll() as $row){
+                $price = $row['price'];
+                $amount = $row['amount'];
+
+                if(isset($row['config_id'])){
+                    $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `config_item` WHERE `id` = :ID");
+                    $statement->execute([
+                        ":ID" => $row['config_id'],
+                    ]);
+                    $config_item = $statement->fetch();
+                    $configItem = new ConfigrationOrderItem($config_item['name'],$amount,[]);
+                    $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `config_item_items` WHERE `id` = :ID");
+                    $statement->execute([
+                        ':ID' => $row['config_id'],
+                    ]);
+
+                    foreach ($statement->fetchAll() as $item){
+                        $array = $configItem->getComponents();
+                        array_push($array,$item['component_id']);
+                        $configItem->setComponents($array);
+                    }
+
+                    $array1 = $order->getItems();
+                    array_push($array1,$configItem);
+                    $order->setItems($array1);
+                }
             }
 
             return $order;

@@ -110,7 +110,6 @@ if(isset($_SESSION['messages'])){
                 return;
             }
         }
-        var_dump($message['data']);
         switch ($message['data']['type']){
             case "success":
                 echo "<script>";

@@ -161,6 +161,9 @@ class Component
      */
     public function getType(): string
     {
+        if($this->type == null){
+            return "";
+        }
         return $this->type;
     }
 

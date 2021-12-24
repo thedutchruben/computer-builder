@@ -186,7 +186,6 @@ class AdminController extends Controller
     }
 
     public function updateProduct(){
-        var_dump($_POST);
         $component = new Component($_POST['id'],$_POST['name']);
         $component->setDescription($_POST['description']);
         $component->setImage($_POST['image']);
@@ -210,7 +209,6 @@ class AdminController extends Controller
     }
 
     public function orderInfo($id){
-        var_dump($this->orderManager->getOrder($id));
         $this->render('\admin\Order.php',
             [
                 "order" => $this->orderManager->getOrder($id),
