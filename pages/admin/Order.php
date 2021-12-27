@@ -16,11 +16,19 @@ function strbool($value): string
     <div class="row justify-content-md-center">
         <div class="col-12 ">
             <div class="row">
-                <div class="col-6">
-                    <p>Status : <?php echo $order->getStatus()?></p>
-                    <p>Paid : <?php echo strbool($order->isPaid())?></p>
+                <div class="col-3">
                     <p>Name : <?php echo $customer->getUserName() ?></p>
                     <p>Email : <?php echo $customer->getEmail() ?></p>
+                    <p>Phone : <?php echo $customer->getPhoneNumber(); ?></p>
+                    <p>Addres :</p>
+                    <p> <?php echo $customer->getStreet() ?></p>
+                    <p> <?php echo $customer->getZipcode() ?> <?php echo $customer->getCity() ?></p>
+                    <p> <?php echo $customer->getState() ?> <?php echo $customer->getCountry() ?></p>
+
+                </div>
+                <div class="col-3">
+                    <p>Status : <?php echo $order->getStatus()?></p>
+                    <p>Paid : <?php echo strbool($order->isPaid())?></p>
                 </div>
                 <div class="col-6">
                     <form action="/sdkjnflawsujdnfgpoasdjnfgpoasdng" method="post" class="row g-3">

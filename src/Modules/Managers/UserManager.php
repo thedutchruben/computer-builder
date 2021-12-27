@@ -3,6 +3,7 @@
 namespace PcBuilder\Modules\Managers;
 
 use PcBuilder\Framework\Registery\Manager;
+use PcBuilder\MailUtill;
 use PcBuilder\Objects\User\User;
 
 class UserManager extends Manager
@@ -10,6 +11,8 @@ class UserManager extends Manager
 
     public function getUser($id) : ?User
     {
+
+
         $user = new User();
         $statement = $this->getMysql()->getPdo()->prepare("SELECT `id`, `username`, `email`, `usertype` FROM `users` WHERE `id` = :ID");
         $statement->execute([
@@ -21,8 +24,17 @@ class UserManager extends Manager
         $user->setUsername($row['username']);
         $user->setEmail($row['email']);
         $user->setUserType($row['usertype']);
-
-
+        $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `customer_data` WHERE `customer_id` = :ID");
+        $statement->execute([
+            ':ID' => $id
+        ]);
+        $row =  $statement->fetch();
+        $user->setPhoneNumber($row['phone_number']);
+        $user->setCountry($row['country']);
+        $user->setStreet($row['street']);
+        $user->setState($row['state']);
+        $user->setCity($row['city']);
+        $user->setZipcode($row['zip_code']);
         return $user;
     }
 
@@ -63,6 +75,15 @@ class UserManager extends Manager
         ];
     }
 
+    public function getSessionUser(): ?User
+    {
+        if($_SESSION["userId"] != null){
+            return $this->getUser($_SESSION["userId"]);
+        }
+
+        return null;
+    }
+
     public function login($vars = []) : array
     {
         $email = $vars['email'];
@@ -75,8 +96,10 @@ class UserManager extends Manager
             ];
         }
 
-        if($this->checkLogin($email,$vars['password'])){
+        $login = $this->checkLogin($email,$vars['password']);
+        if( $login != null){
             $_SESSION["loggedin"] = true;
+            $_SESSION["userId"] = $login;
             return [
                 "success" => true,
                 "message" => "Login success full"
@@ -103,21 +126,21 @@ class UserManager extends Manager
         return false;
     }
 
-    public function checkLogin($email,$password) : bool
+    public function checkLogin($email,$password) : ?int
     {
 
-        $statement = $this->getMysql()->getPdo()->prepare("SELECT `email` , `password` FROM `users` WHERE `email` = :email");
+        $statement = $this->getMysql()->getPdo()->prepare("SELECT `id`, `email` , `password` FROM `users` WHERE `email` = :email");
         $statement->execute([
             ":email" =>  $email
         ]);
         if($statement->rowCount() == 1){
             $row = $statement->fetch();
             if(password_verify($password,$row['password'])){
-                return true;
+                return $row['id'];
             }
 
         }
-        return false;
+        return null;
     }
 
 

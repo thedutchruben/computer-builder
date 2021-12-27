@@ -84,8 +84,7 @@ class IndexController extends Controller
      * This will show the sitemap
      */
     public function checkout_post(){
-        $user = new User();
-        $user->setId(1);
+        $user = $this->userManager->getSessionUser();
         $order = $this->orderManager->placeOrder($user,$this->orderManager->getShoppingCart()->getItems());
         if($order == null){
             header('Location: ' . "/card", true);
