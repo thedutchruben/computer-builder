@@ -7,7 +7,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 
-class MailUtill
+class MailUtil
 {
 
     private Swift_Mailer $mailer;
@@ -24,7 +24,6 @@ class MailUtill
 
         $this->mailer = new Swift_Mailer($transport);
 
-// Create a message
         $this->message = (new Swift_Message($title))
             ->setFrom([$_ENV['EMAIL_NAME'] => $from]);
         ;

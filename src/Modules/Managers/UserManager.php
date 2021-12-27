@@ -3,7 +3,7 @@
 namespace PcBuilder\Modules\Managers;
 
 use PcBuilder\Framework\Registery\Manager;
-use PcBuilder\MailUtill;
+use PcBuilder\MailUtil;
 use PcBuilder\Objects\User\User;
 
 class UserManager extends Manager
