@@ -74,9 +74,10 @@ class OrderManager extends Manager
         $this->getMysql()->getPdo()->commit();
 
         $mail = new MailUtil('Order placed','PCBuilder');
-        $mail->getMessage()->addPart('','text/html');
-
+        $mail->getMessage()->addPart(file_get_contents($_SERVER['DOCUMENT_ROOT']  . "\pages\mails\status\OrderPlacedMail.html"),'text/html');
         $mail->send($user->getEmail());
+
+        $this->getShoppingCart()->clearItems();
         return $orderId;
 
     }

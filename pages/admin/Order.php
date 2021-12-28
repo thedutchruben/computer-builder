@@ -34,7 +34,8 @@ function strbool($value): string
                     <form action="/sdkjnflawsujdnfgpoasdjnfgpoasdng" method="post" class="row g-3">
                         <label>
                             Paid:
-                            <input type="checkbox">
+
+                            <input type="checkbox" <?php if($order->isPaid()) echo "checked"?>>
                         </label>
                         <label>
                             Status:

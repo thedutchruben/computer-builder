@@ -29,7 +29,7 @@
 }
 
 .selected{
-    border: 2px solid darkred !important;
+    border: 2px solid indianred !important;
 }
 
 .card-group::-webkit-scrollbar-thumb
