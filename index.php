@@ -55,7 +55,7 @@ $router = new PcBuilderRouter([
     //Admin orders
     new Route('admin_orders', '/admin/orders', [AdminController::class,"orders"]),
     new Route('admin_order', '/admin/order/{id}', [AdminController::class,"orderInfo"]),
-    new Route('admin_order_update', '/admin/order/{id}/update', [AdminController::class,"updateOrder"]),
+    new Route('admin_order_update', '/admin/order/{id}/update', [AdminController::class,"updateOrder"],['POST']),
 
     //Admin configs
     new Route('admin_configs', '/admin/configs', [AdminController::class,"configs"]),

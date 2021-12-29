@@ -83,6 +83,15 @@ class OrderManager extends Manager
     }
 
 
+    public function updateOrder(Order $order){
+        $statement = $this->getMysql()->getPdo()->prepare("UPDATE `orders` SET `status`=:STATUS,`paid`=:PAID WHERE `id` = :ORDERID");
+        $statement->execute([
+            ":ORDERID" =>  $order->getId(),
+            ":STATUS" =>  $order->getStatus(),
+            ":PAID" => $order->isPaid()
+        ]);
+    }
+
     public function getOpenOrderCount(){
         $statement = $this->getMysql()->getPdo()->
         prepare("SELECT COUNT(`id`) AS Open_Order from `orders` WHERE `status` = 'IN_ORDER'");

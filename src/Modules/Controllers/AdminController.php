@@ -3,6 +3,7 @@
 namespace PcBuilder\Modules\Controllers;
 
 use PcBuilder\Framework\Registery\Controller;
+use PcBuilder\MailUtil;
 use PcBuilder\Modules\Managers\ComponentManager;
 use PcBuilder\Modules\Managers\ConfigurationManager;
 use PcBuilder\Modules\Managers\OrderManager;
@@ -215,5 +216,38 @@ class AdminController extends Controller
                 "order" => $order,
                 "customer" => $this->userManager->getUser($order->getCustomerId())
             ]);
+    }
+
+    public function updateOrder($id){
+        $order = $this->orderManager->getOrder($id);
+        $user = $this->userManager->getUser($order->getCustomerId());
+        if(isset($_POST['paid']) && (!$order->isPaid())){
+            $order->setPaid(true);
+            if(isset($_POST['update_customer'])){
+                $mail = new MailUtil('Payment confirm','PCBuilder');
+                $mail->getMessage()->addPart(file_get_contents($_SERVER['DOCUMENT_ROOT']  . "\pages\mails\status\PaymentConfirmMail.html"),'text/html');
+                $mail->send($user->getEmail());
+            }
+        }
+
+        if($_POST['status'] != $order->getStatus()){
+            $order->setStatus($_POST['status']);
+
+            switch ($_POST['status']){
+                case "IN_PRODUCTION":
+                    $mail = new MailUtil('Order update','PCBuilder');
+                    $mail->getMessage()->addPart(file_get_contents($_SERVER['DOCUMENT_ROOT']  . "\pages\mails\status\OrderInProductionMail.html"),'text/html');
+                    $mail->send($user->getEmail());
+                case "SEND":
+                    $mail = new MailUtil('Order update','PCBuilder');
+                    $mail->getMessage()->addPart(file_get_contents($_SERVER['DOCUMENT_ROOT']  . "\pages\mails\status\OrderSendMail.html"),'text/html');
+                    $mail->send($user->getEmail());
+            }
+        }
+
+
+        $this->orderManager->updateOrder($order);
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        header('Location: '.$actual_link ."/admin/order/" .$id);
     }
 }

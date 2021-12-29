@@ -87,7 +87,6 @@ class UserManager extends Manager
     public function login($vars = []) : array
     {
         $email = $vars['email'];
-//        $password = password_hash($vars['password'],PASSWORD_DEFAULT);
 
         if(!$this->emailInUse($email)){
             return [
@@ -100,6 +99,12 @@ class UserManager extends Manager
         if( $login != null){
             $_SESSION["loggedin"] = true;
             $_SESSION["userId"] = $login;
+            $customerData = $this->getMysql()->getPdo()->prepare("INSERT INTO `log_user_login`(`user_id`, `ip`) VALUES (:USERID,:IP)");
+            $customerData->execute([
+                ":USERID" =>  $login,
+                ":IP" => $this->getIp(),
+            ]);
+
             return [
                 "success" => true,
                 "message" => "Login success full"

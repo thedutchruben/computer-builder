@@ -31,21 +31,26 @@ function strbool($value): string
                     <p>Paid : <?php echo strbool($order->isPaid())?></p>
                 </div>
                 <div class="col-6">
-                    <form action="/sdkjnflawsujdnfgpoasdjnfgpoasdng" method="post" class="row g-3">
+                    <form action="/admin/order/<?php echo $order->getId()?>/update" method="POST" class="row g-3">
                         <label>
                             Paid:
 
-                            <input type="checkbox" <?php if($order->isPaid()) echo "checked"?>>
+                            <input id="paid" name="paid" type="checkbox" <?php if($order->isPaid()) echo "checked"?>>
                         </label>
                         <label>
                             Status:
-                            <select>
-                                <option>Ordered</option>
-                                <option>In production</option>
-                                <option>Send</option>
+                            <select id="status" name="status">
+                                <option value="<?php echo $order->getStatus()?>"><?php echo $order->getStatus()?> (Current)</option>
+                                <option value="IN_ORDER">Ordered</option>
+                                <option value="IN_PRODUCTION">In production</option>
+                                <option value="SEND">Send</option>
                             </select>
                         </label>
-                        <button>Update</button>
+                        <label>
+                            Update Customer
+                            <input id="update_customer" name="update_customer" type="checkbox" checked>
+                        </label>
+                        <button type="submit">Update</button>
                     </form>
                 </div>
             </div>

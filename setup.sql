@@ -76,8 +76,33 @@ CREATE TABLE `config_item` (
 
 CREATE TABLE `config_item_items` (
                                      `id` INT,
-                                     `component_type` varchar (255),
+                                     `component_type` varchar(255),
                                      `component_id` INT
+);
+
+CREATE TABLE `log_order_status` (
+                                    `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                                    `order_id` INT NOT NULL,
+                                    `old_status` float NOT NULL,
+                                    `new_status` float NOT NULL,
+                                    `employee` INT NOT NULL,
+                                    `date` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
+);
+
+CREATE TABLE `log_component_price` (
+                                       `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                                       `component_id` INT NOT NULL,
+                                       `old_price` float NOT NULL,
+                                       `new_price` float NOT NULL,
+                                       `employee` INT NOT NULL,
+                                       `date` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
+);
+
+CREATE TABLE `log_user_login` (
+                                  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                                  `user_id` INT,
+                                  `ip` varchar(45),
+                                  `date` TIMESTAMP DEFAULT (CURRENT_TIMESTAMP)
 );
 
 ALTER TABLE `customer_data` ADD FOREIGN KEY (`customer_id`) REFERENCES `users` (`id`);
@@ -91,6 +116,16 @@ ALTER TABLE `orders_items` ADD FOREIGN KEY (`config_id`) REFERENCES `config_item
 ALTER TABLE `config_item_items` ADD FOREIGN KEY (`id`) REFERENCES `config_item` (`id`);
 
 ALTER TABLE `config_components` ADD FOREIGN KEY (`component_id`) REFERENCES `components` (`id`);
+
+ALTER TABLE `log_user_login` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE `log_component_price` ADD FOREIGN KEY (`employee`) REFERENCES `users` (`id`);
+
+ALTER TABLE `log_order_status` ADD FOREIGN KEY (`employee`) REFERENCES `users` (`id`);
+
+ALTER TABLE `log_order_status` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+
+ALTER TABLE `log_component_price` ADD FOREIGN KEY (`component_id`) REFERENCES `components` (`id`);
 
 CREATE UNIQUE INDEX `id_UNIQUE` ON `request_log` (`id`);
 
