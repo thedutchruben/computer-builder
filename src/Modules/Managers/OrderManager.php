@@ -3,7 +3,6 @@
 namespace PcBuilder\Modules\Managers;
 
 use PcBuilder\Framework\Registery\Manager;
-use Dompdf\Dompdf;
 use PcBuilder\MailUtil;
 use PcBuilder\Objects\Orders\Order;
 use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
@@ -200,33 +199,24 @@ class OrderManager extends Manager
         }
         return null;
     }
-    /**
-     *  Render the pdf of the order
-     * @param Order $order
-     * @param bool $attachment
-     */
-    public function renderPDF(Order $order,bool $attachment = false){
-
-        $dompdf = new Dompdf();
-        $html = '<div id="header">
-<h1>Order :oderId</h1>
-<p>Date: '.$order->getOrderDate().'</p>
-</div>';
-        foreach ($this->getShoppingCard()->getItems() as $item){
-            $html .= "Name : " . $item['name'] . "<br>";
-
-        }
-
-        $dompdf->loadHtml($html);
-        $dompdf->add_info("Title","order");
-        $dompdf->render();
-
-        $dompdf->stream("order.pdf", array("Attachment" => $attachment));
-    }
 
     public function transferIntToBool($int) : bool
     {
         return $int == 1 ? true : false;
+    }
+
+    public function getUserOrders($userId) : array
+    {
+        $statement =  $this->getMysql()->getPdo()->prepare("SELECT `id` FROM `orders` WHERE `customer_id` = :ID");
+        $statement->execute([
+            ':ID' => $userId,
+        ]);
+        $orders = array();
+        foreach ($statement->fetchAll() as $row){
+            array_push($orders,$this->getOrder($row['id']));
+        }
+
+        return $orders;
     }
 
 }

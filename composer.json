@@ -10,7 +10,6 @@
     "require": {
         "vlucas/phpdotenv": "5.*",
         "devcoder-xyz/php-router": "^1.2",
-        "dompdf/dompdf": "^1.0",
         "swiftmailer/swiftmailer": "6.3.0"
     },
     "authors": [

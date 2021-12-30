@@ -10,6 +10,7 @@ use PcBuilder\Modules\Managers\OrderManager;
 use PcBuilder\Modules\Managers\UserManager;
 use PcBuilder\Objects\Component;
 use PcBuilder\Objects\Configurator;
+use PcBuilder\Objects\User\User;
 
 class AdminController extends Controller
 {
@@ -17,8 +18,11 @@ class AdminController extends Controller
     private ConfigurationManager $configurationManager;
     private OrderManager $orderManager;
     private ComponentManager $componentManager;
+    private User $user;
 
-
+    /**
+     * This code will always get executed before the user gets to a page
+     */
     public function __construct()
     {
         parent::__construct();
@@ -26,8 +30,21 @@ class AdminController extends Controller
         $this->configurationManager = new ConfigurationManager();
         $this->orderManager = new OrderManager();
         $this->componentManager = new ComponentManager();
+        $this->user = $this->userManager->getSessionUser();
+        $this->checkAuth();
     }
 
+    public function checkAuth(){
+        if($this->user == null){
+            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+            header('Location: '.$actual_link ."/login");
+        }
+
+        if($this->user->getUserType() == "Customer"){
+            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+            header('Location: '.$actual_link ."/login");
+        }
+    }
 
     /**
      * Route : /admin
@@ -203,7 +220,7 @@ class AdminController extends Controller
         $this->componentManager->updateComponent($component);
         $this->flasher_success("<p>Item Updated</p>",
             [
-                'showTill' => microtime(true) + 20
+                'showTill' => microtime(true) + 200
             ]);
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         header('Location: '.$actual_link ."/admin/products/");
@@ -238,10 +255,12 @@ class AdminController extends Controller
                     $mail = new MailUtil('Order update','PCBuilder');
                     $mail->getMessage()->addPart(file_get_contents($_SERVER['DOCUMENT_ROOT']  . "\pages\mails\status\OrderInProductionMail.html"),'text/html');
                     $mail->send($user->getEmail());
+                    break;
                 case "SEND":
                     $mail = new MailUtil('Order update','PCBuilder');
                     $mail->getMessage()->addPart(file_get_contents($_SERVER['DOCUMENT_ROOT']  . "\pages\mails\status\OrderSendMail.html"),'text/html');
                     $mail->send($user->getEmail());
+                    break;
             }
         }
 

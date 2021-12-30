@@ -17,7 +17,7 @@
     <?php
     foreach ($configs as $config){
         echo "<tr data-type='".$config['name']."'>";
-        echo "<th class='align-middle' scope='row'><img style='max-height: 4vh;padding-left: 20px' src='".$config['image']."'></th>";
+        echo "<th class='align-middle' scope='row'><img style='max-height: 4vh;padding-left: 20px' src='/".$config['image']."'></th>";
         echo "<td class='align-middle'>".$config['name']."</td>";
         echo "<td class='align-middle'>".$config['price']."</td>";
         echo "<td><a class='btn btn-info' href='/admin/config/".$config['id']."'>Edit</a></td>";
