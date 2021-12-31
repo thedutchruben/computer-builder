@@ -57,6 +57,7 @@ class ConfigurationManager extends Manager
         $config->setRgb($this->getConfigItems($id,"RGB"));
         $config->setStorage($this->getConfigItems($id,"STORAGE"));
         $config->setOs($this->getConfigItems($id,"OS"));
+        $config->setCpuCooler($this->getConfigItems($id,"CPUCOOLER"));
 
         return $config;
     }

@@ -43,6 +43,7 @@ class ConfiguratorController extends Controller
             'description' => $config->getDescription(),
             'cases' => $this->componentManager->getOrderdComponents($config->getCases()),
             'cpu' => $this->componentManager->getOrderdComponents($config->getCpu()),
+            'cpucoolers' => $this->componentManager->getOrderdComponents($config->getCpuCoolers()),
             'motherboard' => $this->componentManager->getOrderdComponents($config->getMotherboard()),
             'memory' => $this->componentManager->getOrderdComponents($config->getMemory()),
             'storage' => $this->componentManager->getOrderdComponents($config->getStorage()),
@@ -52,7 +53,7 @@ class ConfiguratorController extends Controller
             'dvd' => $this->componentManager->getOrderdComponents($config->getDvd(),true),
             'psu' => $this->componentManager->getOrderdComponents($config->getPsu()),
             'os' => $this->componentManager->getOrderdComponents($config->getOs()),
-            'storageCount' => 5
+            'storageCount' => 2
         ]);
     }
 

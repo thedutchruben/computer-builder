@@ -19,6 +19,7 @@ $(document).ready(function() {
             updateData()
         }
     }
+
 });
 
 //Remove selection from element
@@ -53,6 +54,19 @@ function updateData(){
     }
     document.getElementById('finalPrice').innerHTML = "€" + price.toFixed(2);
     updateUrl();
+    updateSideBar()
+}
+
+function updateSideBar(){
+    var element = document.getElementById("items");
+    element.innerHTML = ''
+    for (let componentsKey in components) {
+        // newUrl+= componentsKey + "=" + components[componentsKey] + "&";
+        var tag = document.createElement("p");
+        var text = document.createTextNode(componentsKey +" " + components[componentsKey]);
+        tag.appendChild(text);
+        element.appendChild(tag);
+    }
 }
 
 

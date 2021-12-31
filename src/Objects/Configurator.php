@@ -31,6 +31,10 @@ class Configurator
      */
     private array $cpu = [];
     /**
+     * @var array All the processors coolers that are selected for the configurator
+     */
+    private array $cpuCooler = [];
+    /**
      * @var array All the motherboards that are selected for the configurator
      */
     private array $motherboard= [];
@@ -278,11 +282,27 @@ class Configurator
     }
 
     /**
+     * @return array
+     */
+    public function getCpuCoolers(): array
+    {
+        return $this->cpuCooler;
+    }
+
+    /**
+     * @param array $cpuCooler
+     */
+    public function setCpuCooler(array $cpuCooler): void
+    {
+        $this->cpuCooler = $cpuCooler;
+    }
+
+    /**
      * Get all the components items that the configurator has
      * @return array with all the components
      */
     public function getAllComponents(){
         return  array_merge($this->getCases(),$this->getCpu(),$this->getMotherboard(),$this->getMemory(),$this->getOs(),$this->getStorage()
-            ,$this->getGpu(),$this->getRgb(),$this->getPsu(),$this->getDvd());
+            ,$this->getGpu(),$this->getRgb(),$this->getPsu(),$this->getDvd(),$this->getCpuCoolers());
     }
 }

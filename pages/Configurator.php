@@ -70,13 +70,15 @@ include 'templates/Header.php';
                     <?php
                 }
 
-                renderData("Behuizing","case",$cases,"In de behuizing gaan alle onderdelen");
-                renderData("Proccesor","cpu",$cpu,"De cpu is het brein van je computer");
+                renderData("Case","case",$cases,"In de behuizing gaan alle onderdelen");
+                renderData("Cpu","cpu",$cpu,"De cpu is het brein van je computer");
+                renderData("Cpu Cooler","cpucooler",$cpucoolers,"De cpu is het brein van je computer");
+
                 renderData("Moederbord","motherboard",$motherboard,"Op het moederbord worden alle onderdelen op aangesloten");
-                renderData("Geheugen","memory",$memory,"Het geheugen is het korte termijn geheugen van je pc");
-                renderData("Opslag","storage",$storage,"De opslag van je pc is om alles op te slaan");
+                renderData("Memory","memory",$memory,"Het geheugen is het korte termijn geheugen van je pc");
+                renderData("Storage","storage",$storage,"De opslag van je pc is om alles op te slaan");
                 for ($i = 0;$i <= intval($storageCount); $i++){
-                    renderData("Opslag".$i,"storage".$i,$storage1,"De opslag van je pc is om alles op te slaan");
+                    renderData("Storage","storage".$i,$storage1,"De opslag van je pc is om alles op te slaan");
                 }
 
                 renderData("Videokaart","gpu",$gpu,"Een dvd-speler is een apparaat voor het afspelen van dvd's waarop beeld en/of muziek in digitale vorm is opgeslagen.");
@@ -91,12 +93,15 @@ include 'templates/Header.php';
             </div></div>
         <div class="col-2"><div id="sideBar" class="sideBar">
                 <div id="priceBox">
+                    <div id="items">
+
+                    </div>
                     <p id="finalPrice"></p>
                     <form method="post">
                         <input type="hidden" name="pcName" id="pcName" value="<?php echo $name?>">
                         <input type="hidden" name="config" id="config" value="">
                         <input type="submit" name="addToCard"
-                               value="addToCard"/>
+                               value="Add to Card"/>
                     </form>
                 </div>
             </div></div>

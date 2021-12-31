@@ -39,6 +39,7 @@
                         <?php echo "<option value='".$component->getType()."' selected>".$component->getType()."</option>" ?>
                         <option value="CASE" >Case</option>
                         <option value="CPU">Cpu</option>
+                        <option value="CPUCOOLER">CPUCOOLER</option>
                         <option value="RAM">Ram</option>
                         <option value="MOTHERBOARD">Motherboard</option>
                         <option value="GRAPHICSCARD">GraphicsCard</option>
@@ -47,10 +48,11 @@
                         <option value="PSU">Psu</option>
                         <option value="RGB">RGB</option>
                         <option value="OS">OS</option>
+
                     </select>
                 </div>
                 <div class="col-6">
-                    <label>Teakers Id</label>
+                    <label>Megekko Id</label>
                     <input type="number" name="tweakersid" class="form-control" placeholder="10" step="1" value="<?php echo $component->getTweakersId();?>" required>
                 </div>
                 <div class="col-6">

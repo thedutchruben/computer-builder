@@ -99,9 +99,9 @@ function getShoppingCart() :ShoppingCart
                         echo $item->getName();
                         echo $item instanceof ConfigrationOrderItem;
                         if($item instanceof ConfigrationOrderItem){
-//                            foreach ($item->getComponents() as $component){
-//                                echo $component . "<br>";
-//                            }
+                            foreach ($item->getComponents() as $component){
+                                echo $component . "<br>";
+                            }
                         }
                     }
                 ?>

@@ -40,8 +40,8 @@ $router = new PcBuilderRouter([
 
     //Customer Routing
     new Route('customer_index', '/customer', [CustomerController::class,"index"]),
-    new Route('customer_orders', '/customer/orders', [CustomerController::class,"order"]),
-    new Route('customer_order', '/customer/orders/{id}', [CustomerController::class,"orderInfo"]),
+    new Route('customer_orders', '/customer/orders', [CustomerController::class,"orders"]),
+    new Route('customer_order', '/customer/order/{id}', [CustomerController::class,"orderInfo"]),
 
     //admin
     new Route('admin_index', '/admin', [AdminController::class,"index"]),

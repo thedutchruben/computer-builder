@@ -17,6 +17,7 @@
                 <option value="ALL">All</option>
                 <option value="CASE">Case</option>
                 <option value="CPU">Cpu</option>
+                <option value="CPUCOOLER">CPUCOOLER</option>
                 <option value="RAM">Ram</option>
                 <option value="MOTHERBOARD">Motherboard</option>
                 <option value="GRAPHICSCARD">GraphicsCard</option>
@@ -88,6 +89,7 @@
                         <select id="type" name="type" class="form-control" required>
                             <option value="CASE">Case</option>
                             <option value="CPU">Cpu</option>
+                            <option value="CPUCOOLER">CPUCOOLER</option>
                             <option value="RAM">Ram</option>
                             <option value="MOTHERBOARD">Motherboard</option>
                             <option value="GRAPHICSCARD">GraphicsCard</option>
@@ -99,7 +101,7 @@
                         </select>
                     </div>
                     <div class="col-6">
-                        <label>Teakers Id</label>
+                        <label>Megekko Id</label>
                         <input type="number" name="tweakersid" class="form-control" placeholder="10" step="1" required>
                     </div>
                     <div class="col-6">

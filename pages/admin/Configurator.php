@@ -18,6 +18,7 @@ $manager = new ComponentManager();
                     <?php
                     renderBlock("Case's",$manager->getComponentsByType("CASE"),$config->getCases());
                     renderBlock("Cpu's",$manager->getComponentsByType("CPU"),$config->getCpu());
+                    renderBlock("Cpu Coolers",$manager->getComponentsByType("CPUCOOLER"),$config->getCpuCoolers());
                     renderBlock("Os",$manager->getComponentsByType("OS"),$config->getOs());
                     renderBlock("Storage",$manager->getComponentsByType("STORAGE"),$config->getStorage());
                     renderBlock("Motherboard",$manager->getComponentsByType("MOTHERBOARD"),$config->getMotherboard());

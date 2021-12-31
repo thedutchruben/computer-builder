@@ -18,7 +18,7 @@ class AdminController extends Controller
     private ConfigurationManager $configurationManager;
     private OrderManager $orderManager;
     private ComponentManager $componentManager;
-    private User $user;
+    private ?User $user;
 
     /**
      * This code will always get executed before the user gets to a page
@@ -35,14 +35,14 @@ class AdminController extends Controller
     }
 
     public function checkAuth(){
-        if($this->user == null){
+        if(!isset($this->user)){
             $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
             header('Location: '.$actual_link ."/login");
         }
 
         if($this->user->getUserType() == "Customer"){
             $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-            header('Location: '.$actual_link ."/login");
+            header('Location: '.$actual_link ."/customer");
         }
     }
 

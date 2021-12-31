@@ -77,7 +77,7 @@ class UserManager extends Manager
 
     public function getSessionUser(): ?User
     {
-        if($_SESSION["userId"] != null){
+        if(isset($_SESSION["userId"])){
             return $this->getUser($_SESSION["userId"]);
         }
 

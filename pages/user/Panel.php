@@ -1,5 +1,26 @@
 <?php
 include 'templates/UserHeader.php';
+
+function getStatusFormat($order){
+    $status = "Waiting for confirm";
+
+    if($order->isPaid()){
+        $status = "Payment completed";
+        switch ($order->getStatus()){
+            case "IN_ORDER":
+                $status = "In order";
+                break;
+            case "IN_PRODUCTION":
+                $status = "In production";
+                break;
+            case "SEND":
+                $status = "Completed";
+                break;
+        }
+    }
+
+    return $status;
+}
 ?>
 
 
@@ -21,7 +42,7 @@ include 'templates/UserHeader.php';
                 <tr>
                     <th scope="row"><?php echo $order->getId() ?></th>
                     <td><?php echo $order->getOrderDate() ?></td>
-                    <td><?php echo $order->getStatus() ?></td>
+                    <td><?php echo getStatusFormat($order) ?></td>
                     <td><a href="/customer/order/<?php echo $order->getId() ?>">Open</a></td>
                 </tr>
                 <?php } ?>
