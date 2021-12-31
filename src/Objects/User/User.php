@@ -87,6 +87,7 @@ class User
     }
 
     /**
+     * Get the email of the user
      * @return String
      */
     public function getEmail(): string
@@ -95,6 +96,7 @@ class User
     }
 
     /**
+     * Set the email of the user
      * @param String $email
      */
     public function setEmail(string $email): void
@@ -103,6 +105,7 @@ class User
     }
 
     /**
+     * Get the phonenumber of the user
      * @return String
      */
     public function getPhoneNumber(): string
@@ -111,6 +114,7 @@ class User
     }
 
     /**
+     * Set the phone number of the user
      * @param String $phoneNumber
      */
     public function setPhoneNumber(string $phoneNumber): void
@@ -119,6 +123,7 @@ class User
     }
 
     /**
+     * Get the country of the user
      * @return String
      */
     public function getCountry(): string
@@ -127,6 +132,7 @@ class User
     }
 
     /**
+     * Set the country of the user
      * @param String $country
      */
     public function setCountry(string $country): void
@@ -135,6 +141,7 @@ class User
     }
 
     /**
+     * Get the street of the user
      * @return String
      */
     public function getStreet(): string
@@ -143,6 +150,7 @@ class User
     }
 
     /**
+     * Set the street of the user
      * @param String $street
      */
     public function setStreet(string $street): void
@@ -151,6 +159,7 @@ class User
     }
 
     /**
+     * Get the state/provice of the user
      * @return String
      */
     public function getState(): string
@@ -159,6 +168,7 @@ class User
     }
 
     /**
+     * Set the state/provice of the user
      * @param String $state
      */
     public function setState(string $state): void
@@ -167,6 +177,7 @@ class User
     }
 
     /**
+     * Get the city of the user
      * @return String
      */
     public function getCity(): string
@@ -175,6 +186,7 @@ class User
     }
 
     /**
+     * Set the city of the user
      * @param String $city
      */
     public function setCity(string $city): void
@@ -183,6 +195,7 @@ class User
     }
 
     /**
+     * Get the zip code of the user
      * @return String
      */
     public function getZipcode(): string
@@ -191,6 +204,7 @@ class User
     }
 
     /**
+     * Set the zip code of the user
      * @param String $zipcode
      */
     public function setZipcode(string $zipcode): void
@@ -199,7 +213,8 @@ class User
     }
 
     /**
-     * @param String $userType
+     * Get the user type of the user
+     * @param String $userType Type's are Customer , Employee , Manager
      */
     public function setUserType(string $userType): void
     {
@@ -207,7 +222,8 @@ class User
     }
 
     /**
-     * @return String
+     * Get the type of user
+     * @return String Type's are Customer , Employee , Manager
      */
     public function getUserType(): string
     {

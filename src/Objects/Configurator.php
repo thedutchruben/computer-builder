@@ -2,6 +2,8 @@
 
 namespace PcBuilder\Objects;
 
+use JetBrains\PhpStorm\Pure;
+
 /**
  * The configurator class contains all the data of the configurator
  * @version 1.0
@@ -114,6 +116,7 @@ class Configurator
     }
 
     /**
+     * Set the description of the configurator
      * @param String $description
      */
     public function setDescription(string $description): void
@@ -122,6 +125,7 @@ class Configurator
     }
 
     /**
+     * Get the cases of the configurator
      * @return array
      */
     public function getCases(): array
@@ -130,6 +134,7 @@ class Configurator
     }
 
     /**
+     * Set the cases of the configurator
      * @param array $cases
      */
     public function setCases(array $cases): void
@@ -138,6 +143,7 @@ class Configurator
     }
 
     /**
+     * Get the cpu's of the configurator
      * @return array
      */
     public function getCpu(): array
@@ -146,6 +152,7 @@ class Configurator
     }
 
     /**
+     * Set the cpu's of the configurator
      * @param array $cpu
      */
     public function setCpu(array $cpu): void
@@ -154,6 +161,7 @@ class Configurator
     }
 
     /**
+     * Get the motherboards of the configurator
      * @return array
      */
     public function getMotherboard(): array
@@ -162,6 +170,7 @@ class Configurator
     }
 
     /**
+     * Set the motherboards of the configurator
      * @param array $motherboard
      */
     public function setMotherboard(array $motherboard): void
@@ -170,6 +179,7 @@ class Configurator
     }
 
     /**
+     * Get the gpu's of the configurator
      * @return array
      */
     public function getGpu(): array
@@ -178,6 +188,7 @@ class Configurator
     }
 
     /**
+     * Set the gpu's of the configurator
      * @param array $gpu
      */
     public function setGpu(array $gpu): void
@@ -186,7 +197,8 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * Get the memory's of the configurator
+     * @return array
      */
     public function getMemory(): array
     {
@@ -194,7 +206,8 @@ class Configurator
     }
 
     /**
-     * @param Array $memory
+     * Set the memory of the configurator
+     * @param array $memory
      */
     public function setMemory(array $memory): void
     {
@@ -202,7 +215,8 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * Get the psu's of the configurator
+     * @return array
      */
     public function getPsu(): array
     {
@@ -210,7 +224,8 @@ class Configurator
     }
 
     /**
-     * @param Array $psu
+     * Set the psu's of the configurator
+     * @param array $psu
      */
     public function setPsu(array $psu): void
     {
@@ -218,7 +233,8 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * Get the storage's of the configurator
+     * @return array
      */
     public function getStorage(): array
     {
@@ -226,7 +242,8 @@ class Configurator
     }
 
     /**
-     * @param Array $storage
+     * Set the storage's of the configurator
+     * @param array $storage
      */
     public function setStorage(array $storage): void
     {
@@ -234,7 +251,8 @@ class Configurator
     }
 
     /**
-     * @return Array
+     * Get the rgb types of the configurator
+     * @return array
      */
     public function getRgb(): array
     {
@@ -242,6 +260,7 @@ class Configurator
     }
 
     /**
+     * Get the dvd types of the configurator
      * @return array
      */
     public function getDvd(): array
@@ -250,6 +269,7 @@ class Configurator
     }
 
     /**
+     * Set the dvd types of the configurator
      * @param array $dvd
      */
     public function setDvd(array $dvd): void
@@ -258,6 +278,7 @@ class Configurator
     }
 
     /**
+     * Set the rgb types of the configurator
      * @param array $rgb
      */
     public function setRgb(array $rgb): void
@@ -266,6 +287,7 @@ class Configurator
     }
 
     /**
+     * Get the os types of the configurator
      * @return array
      */
     public function getOs(): array
@@ -274,6 +296,7 @@ class Configurator
     }
 
     /**
+     * Set the os types of the configurator
      * @param array $os
      */
     public function setOs(array $os): void
@@ -282,6 +305,7 @@ class Configurator
     }
 
     /**
+     * Get the cpu coolers of the configurator
      * @return array
      */
     public function getCpuCoolers(): array
@@ -290,6 +314,7 @@ class Configurator
     }
 
     /**
+     * Set the cpu coolers of the configurator
      * @param array $cpuCooler
      */
     public function setCpuCooler(array $cpuCooler): void
@@ -297,12 +322,13 @@ class Configurator
         $this->cpuCooler = $cpuCooler;
     }
 
+
     /**
      * Get all the components items that the configurator has
      * @return array with all the components
      */
     public function getAllComponents(){
-        return  array_merge($this->getCases(),$this->getCpu(),$this->getMotherboard(),$this->getMemory(),$this->getOs(),$this->getStorage()
+        return array_merge($this->getCases(),$this->getCpu(),$this->getMotherboard(),$this->getMemory(),$this->getOs(),$this->getStorage()
             ,$this->getGpu(),$this->getRgb(),$this->getPsu(),$this->getDvd(),$this->getCpuCoolers());
     }
 }

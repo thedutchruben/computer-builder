@@ -2,7 +2,7 @@
 
 use PcBuilder\Modules\Managers\ComponentManager;
 use PcBuilder\Modules\Managers\ConfigurationManager;
-use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
+use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 
 $configruatorManager = new ConfigurationManager();
 $componentManager = new ComponentManager();
@@ -27,7 +27,7 @@ foreach (getShoppingCart()->getItems() as $item){
                 foreach (getShoppingCart()->getItems() as $item){
                     echo "<li class='list-group-item'>";
                     echo "<div class='fw-bold' style='font-size: 20px'>". $item->getName() . "<button type='button' class='btn btn-error'>Remove</button></div><br>";
-                    if($item instanceof ConfigrationOrderItem){
+                    if($item instanceof ConfigurationOrderItem){
                         $total += ($item->getPrice());
                         foreach ($item->getComponents() as $component){
                             if($componentManager->getComponent($component) != null){

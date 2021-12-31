@@ -5,7 +5,7 @@ namespace PcBuilder\Modules\Managers;
 use PcBuilder\Framework\Registery\Manager;
 use PcBuilder\MailUtil;
 use PcBuilder\Objects\Orders\Order;
-use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
+use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 use PcBuilder\Objects\ShoppingCart;
 use PcBuilder\Objects\User\User;
 
@@ -37,7 +37,7 @@ class OrderManager extends Manager
             $orderId = $this->getMysql()->getPdo()->lastInsertId();
             $order->setId($orderId);
             foreach ($items as $item){
-                if($item instanceof ConfigrationOrderItem){
+                if($item instanceof ConfigurationOrderItem){
                     $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `config_item`(`created`,`name`) VALUES (CURRENT_DATE,:CONFIGNAME);");
                     $statement->execute([
                         ":CONFIGNAME" => $item->getName()
@@ -175,7 +175,7 @@ class OrderManager extends Manager
                         ":ID" => $row['config_id'],
                     ]);
                     $config_item = $statement->fetch();
-                    $configItem = new ConfigrationOrderItem($config_item['name'],$amount,[]);
+                    $configItem = new ConfigurationOrderItem($config_item['name'],$amount,[]);
                     $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `config_item_items` WHERE `id` = :ID");
                     $statement->execute([
                         ':ID' => $row['config_id'],

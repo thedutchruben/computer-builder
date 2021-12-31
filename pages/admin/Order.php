@@ -1,5 +1,5 @@
 <?php use PcBuilder\Modules\Managers\ComponentManager;
-use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
+use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 
 $componentManager = new ComponentManager();
 include 'templates/AdminHeader.php';
@@ -57,7 +57,7 @@ function strbool($value): string
             <?php foreach ($order->getItems() as $orderItem){?>
                 <div class="col-12 ">
                     <h3><?php echo $orderItem->getName() ?></h3>
-                    <?php if($orderItem instanceof ConfigrationOrderItem){ ?>
+                    <?php if($orderItem instanceof ConfigurationOrderItem){ ?>
                         <ul class="list-group">
                             <?php
                             foreach ($orderItem->getComponents() as $component){

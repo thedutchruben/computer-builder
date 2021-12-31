@@ -17,6 +17,7 @@ include 'templates/Header.php';
             ?>
         </div>
     </div>
+
     <div class="row">
         <div class="col-10"><div style="margin-left: 10px;" id="builder" class="mainCard">
                 <?php
@@ -90,21 +91,25 @@ include 'templates/Header.php';
 
                 ?>
 
-            </div></div>
-        <div class="col-2"><div id="sideBar" class="sideBar">
-                <div id="priceBox">
-                    <div id="items">
-
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="sticky-sm-top" style="padding-top: 50% !important;">
+                <div id="sideBar" class="sideBar">
+                    <div id="priceBox">
+                        <p id="finalPrice"></p>
+                        <form method="post">
+                            <input type="hidden" name="pcName" id="pcName" value="<?php echo $name?>">
+                            <input type="hidden" name="config" id="config" value="">
+                            <input type="submit" name="addToCard"
+                                   value="Add to Card"/>
+                        </form>
                     </div>
-                    <p id="finalPrice"></p>
-                    <form method="post">
-                        <input type="hidden" name="pcName" id="pcName" value="<?php echo $name?>">
-                        <input type="hidden" name="config" id="config" value="">
-                        <input type="submit" name="addToCard"
-                               value="Add to Card"/>
-                    </form>
                 </div>
-            </div></div>
+            </div>
+
+        </div>
+
     </div>
 </div>
 

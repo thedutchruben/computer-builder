@@ -1,7 +1,7 @@
 <?php
 
 use PcBuilder\Modules\Managers\ComponentManager;
-use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
+use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 
 include 'templates/UserHeader.php';
 
@@ -92,7 +92,7 @@ if($order->isPaid()){
     <?php foreach ($order->getItems() as $orderItem){?>
         <div class="col-12 ">
             <h4><?php echo $orderItem->getName() ?></h4>
-            <?php if($orderItem instanceof ConfigrationOrderItem){ ?>
+            <?php if($orderItem instanceof ConfigurationOrderItem){ ?>
                 <ul class="list-group">
                     <?php
                     foreach ($orderItem->getComponents() as $component){

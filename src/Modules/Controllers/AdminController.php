@@ -68,7 +68,7 @@ class AdminController extends Controller
                         'price' => "not Available",
                         'currentPrice' => doubleval($currentPrice)
                     ]);
-                }else if(doubleval($currentPrice) > doubleval($component->getPrice())){
+                }else if(doubleval($currentPrice) > doubleval($component->getPrice()) ||  doubleval($component->getPrice()) - doubleval($currentPrice) > doubleval($_ENV['MAX_PRICE_DIF'])){
                     array_push($wrongPrice,[
                         'id' => $component->getId(),
                         'name' => $component->getDisplayName(),

@@ -57,19 +57,6 @@ function updateData(){
     updateSideBar()
 }
 
-function updateSideBar(){
-    var element = document.getElementById("items");
-    element.innerHTML = ''
-    for (let componentsKey in components) {
-        // newUrl+= componentsKey + "=" + components[componentsKey] + "&";
-        var tag = document.createElement("p");
-        var text = document.createTextNode(componentsKey +" " + components[componentsKey]);
-        tag.appendChild(text);
-        element.appendChild(tag);
-    }
-}
-
-
 //When pressed the card it wil trigger the selections and updates
 $(".card").click(function() {
     unselect($(this)[0].dataset.category,components[$(this)[0].dataset.category]);

@@ -2,6 +2,12 @@
 
 namespace PcBuilder\Objects;
 
+/**
+ * The message object for flasher messages
+ *
+ * @version 1.0
+ * @author Ruben de Roos
+ */
 class Message
 {
 

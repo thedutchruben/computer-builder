@@ -1,7 +1,7 @@
 <?php
 
 use PcBuilder\Modules\Managers\UserManager;
-use PcBuilder\Objects\Orders\OrderItems\ConfigrationOrderItem;
+use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 use PcBuilder\Objects\ShoppingCart;
 
 $userManager = new UserManager();
@@ -97,8 +97,8 @@ function getShoppingCart() :ShoppingCart
                 <?php
                     foreach (getShoppingCart()->getItems() as $item){
                         echo $item->getName();
-                        echo $item instanceof ConfigrationOrderItem;
-                        if($item instanceof ConfigrationOrderItem){
+                        echo $item instanceof ConfigurationOrderItem;
+                        if($item instanceof ConfigurationOrderItem){
                             foreach ($item->getComponents() as $component){
                                 echo $component . "<br>";
                             }

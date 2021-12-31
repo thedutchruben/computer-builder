@@ -4,12 +4,21 @@ namespace PcBuilder\Objects\Orders\OrderItems;
 
 use PcBuilder\Objects\Orders\OrderItem;
 
-class ConfigrationOrderItem extends OrderItem
+/**
+ * The Configuration order item is an item that contains the components of the ordered configuration
+ * This class extends the OrderItem
+ */
+class ConfigurationOrderItem extends OrderItem
 {
 
+    /**
+     * The components
+     * @var array
+     */
     private array $components;
 
     /**
+     * Create the order item
      * @param string $name
      * @param int $amount
      * @param array $components
@@ -21,6 +30,7 @@ class ConfigrationOrderItem extends OrderItem
     }
 
     /**
+     * Get the components of the order
      * @return array
      */
     public function getComponents(): array
@@ -29,6 +39,7 @@ class ConfigrationOrderItem extends OrderItem
     }
 
     /**
+     * Set the components of the Order Item
      * @param array $components
      */
     public function setComponents(array $components): void
