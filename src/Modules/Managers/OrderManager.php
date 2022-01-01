@@ -9,10 +9,21 @@ use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 use PcBuilder\Objects\ShoppingCart;
 use PcBuilder\Objects\User\User;
 
+/**
+ * Manage all the orders
+ */
 class OrderManager extends Manager
 {
+
+    /**
+     * A link to the component manager
+     * @var ComponentManager
+     */
     private ComponentManager $componentManager;
 
+    /**
+     * Construct the manager and load all the classes that are needed
+     */
     public function __construct()
     {
         parent::__construct();
@@ -20,15 +31,26 @@ class OrderManager extends Manager
     }
 
 
-    public function placeOrder(User $user,array $items){
+    /**
+     * Place an order
+     * @param User $user
+     * @param array $items
+     * @return false|string|null
+     */
+    public function placeOrder(User $user, array $items): bool|string|null
+    {
         if(sizeof($items) == 0) return null;
         $order = new Order(-1,$user->getId(),$items);
         $this->getMysql()->getPdo()->beginTransaction();
         $price = 0.00;
+
+        //Calculate the price
         foreach ($items as $item){
             $price += $item->getPrice();
         }
+
         try {
+            //Create the order in the database
             $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `orders`(`customer_id`, `total_price`) VALUES (:USERID,:PRICE);");
             $statement->execute([
                 ":USERID" =>  $user->getId(),
@@ -36,6 +58,8 @@ class OrderManager extends Manager
             ]);
             $orderId = $this->getMysql()->getPdo()->lastInsertId();
             $order->setId($orderId);
+
+            //Put the order items in the database
             foreach ($items as $item){
                 if($item instanceof ConfigurationOrderItem){
                     $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `config_item`(`created`,`name`) VALUES (CURRENT_DATE,:CONFIGNAME);");
@@ -82,6 +106,10 @@ class OrderManager extends Manager
     }
 
 
+    /**
+     * @param Order $order
+     * @return void
+     */
     public function updateOrder(Order $order){
         $statement = $this->getMysql()->getPdo()->prepare("UPDATE `orders` SET `status`=:STATUS,`paid`=:PAID WHERE `id` = :ORDERID");
         $statement->execute([
@@ -91,6 +119,9 @@ class OrderManager extends Manager
         ]);
     }
 
+    /**
+     * @return mixed
+     */
     public function getOpenOrderCount(){
         $statement = $this->getMysql()->getPdo()->
         prepare("SELECT COUNT(`id`) AS Open_Order from `orders` WHERE `status` = 'IN_ORDER'");
@@ -98,6 +129,9 @@ class OrderManager extends Manager
         return $statement->fetch()['Open_Order'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getProductionOrderCount(){
         $statement = $this->getMysql()->getPdo()->
         prepare("SELECT COUNT(`id`) AS Open_Order from `orders` WHERE `status` = 'IN_PRODUCTION'");
@@ -105,6 +139,10 @@ class OrderManager extends Manager
         return $statement->fetch()['Open_Order'];
     }
 
+    /**
+     * @param $item
+     * @return void
+     */
     public function addItemToCart($item){
         $this->flasher_success("Item added to shopping cart");
         //ShoppingCart
@@ -114,11 +152,17 @@ class OrderManager extends Manager
         $_SESSION['shopping-cart']->addItem($item);
     }
 
+    /**
+     * @return ShoppingCart
+     */
     public function getShoppingCart() :ShoppingCart
     {
         return $_SESSION['shopping-cart'];
     }
 
+    /**
+     * @return array
+     */
     public function getOrders(){
 
         $items = [];
@@ -144,6 +188,10 @@ class OrderManager extends Manager
         return $items;
     }
 
+    /**
+     * @param $id
+     * @return Order|null
+     */
     public function getOrder($id) : ?Order
     {
 
@@ -200,11 +248,19 @@ class OrderManager extends Manager
         return null;
     }
 
+    /**
+     * @param $int
+     * @return bool
+     */
     public function transferIntToBool($int) : bool
     {
         return $int == 1 ? true : false;
     }
 
+    /**
+     * @param $userId
+     * @return array
+     */
     public function getUserOrders($userId) : array
     {
         $statement =  $this->getMysql()->getPdo()->prepare("SELECT `id` FROM `orders` WHERE `customer_id` = :ID");

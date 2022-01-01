@@ -13,11 +13,16 @@ use PcBuilder\Modules\Controllers\IndexController;
 use PcBuilder\Modules\Controllers\UserController;
 
 
+//Load the .env file
 $dotenv  = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
+//Start the session
 session_start();
 
+/**
+ * Register the routing
+ */
 $router = new PcBuilderRouter([
     //Default routing
     new Route('home_page', '/', [IndexController::class,"index"]),
