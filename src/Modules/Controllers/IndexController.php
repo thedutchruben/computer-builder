@@ -2,21 +2,41 @@
 
 namespace PcBuilder\Modules\Controllers;
 
+use PcBuilder\Framework\Execptions\TemplateNotFound;
 use PcBuilder\Framework\Registery\Controller;
 use PcBuilder\Modules\Managers\ConfigurationManager;
 use PcBuilder\Modules\Managers\OrderManager;
 use PcBuilder\Modules\Managers\UserManager;
 use PcBuilder\Objects\User\User;
 
+/**
+ * The index controller will handle all the default pages that you can reach
+ */
 class IndexController extends Controller
 {
-    private ConfigurationManager $configruatorManager;
+    /**
+     * A link to the configuration manager
+     * @var ConfigurationManager
+     */
+    private ConfigurationManager $configuratorManager;
+    /**
+     * A link to the order manager
+     * @var OrderManager
+     */
     private OrderManager $orderManager;
+    /**
+     * A link to the user manager
+     * @var UserManager
+     */
     private UserManager $userManager;
+
+    /**
+     * Setting up all the needed links for the index controller
+     */
     public function __construct()
     {
         parent::__construct();
-        $this->configruatorManager = new ConfigurationManager();
+        $this->configuratorManager = new ConfigurationManager();
         $this->orderManager = new OrderManager();
         $this->userManager = new UserManager();
     }
@@ -26,7 +46,7 @@ class IndexController extends Controller
      */
     public function index(){
         $this->render('HomePage.php',[
-            'configs' => $this->configruatorManager->getBasicConfigurator(),
+            'configs' => $this->configuratorManager->getBasicConfigurator(),
         ]);
         $this->flasher_success(
             "<h2>Korting!</h2></br><p>Gebruik nu de code <code>10AF</code> om 10% korting te krijgen op je aankoop</p>",[
@@ -35,20 +55,12 @@ class IndexController extends Controller
         );
     }
 
-    /**
-     * Route : /sitemap
-     *
-     * This will show the sitemap
-     */
-    public function siteMap(){
-
-    }
-
 
     /**
      * Route : /cart
      *
      * This will show the shopping cart
+     * @throws TemplateNotFound
      */
     public function cart(){
         $this->render('CartPage.php');
@@ -57,7 +69,7 @@ class IndexController extends Controller
     /**
      * Route : /checkout
      *
-     * This will show the sitemap
+     * Render the checkout page
      */
     public function checkout(){
         if($this->userManager->is_authenticated()){
@@ -73,7 +85,7 @@ class IndexController extends Controller
     /**
      * Route : /checkout
      *
-     * This will show the sitemap
+     * This will register an order
      */
     public function checkout_post(){
         $user = $this->userManager->getSessionUser();

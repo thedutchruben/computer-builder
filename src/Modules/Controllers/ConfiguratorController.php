@@ -11,12 +11,30 @@ use PcBuilder\Objects\Component;
 use PcBuilder\Objects\Configurator;
 use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 
+/**
+ * Handle all the endpoints for the configurators
+ */
 class ConfiguratorController extends Controller
 {
+    /**
+     * A link to the configuration manager
+     * @var ConfigurationManager
+     */
     private ConfigurationManager $configurationManager;
+    /**
+     * A link to the order manager
+     * @var OrderManager
+     */
     private OrderManager $orderManager;
+    /**
+     * A link to the component manager
+     * @var ComponentManager
+     */
     private ComponentManager $componentManager;
 
+    /**
+     * Setting up all the link's to the manager's
+     */
     public function __construct()
     {
         parent::__construct();

@@ -2,6 +2,7 @@
 
 namespace PcBuilder\Modules\Controllers;
 
+use PcBuilder\Framework\Execptions\TemplateNotFound;
 use PcBuilder\Framework\Registery\Controller;
 use PcBuilder\MailUtil;
 use PcBuilder\Modules\Managers\ComponentManager;
@@ -12,12 +13,30 @@ use PcBuilder\Objects\Component;
 use PcBuilder\Objects\Configurator;
 use PcBuilder\Objects\User\User;
 
+/**
+ *
+ */
 class AdminController extends Controller
 {
+    /**
+     * @var UserManager
+     */
     private UserManager $userManager;
+    /**
+     * @var ConfigurationManager
+     */
     private ConfigurationManager $configurationManager;
+    /**
+     * @var OrderManager
+     */
     private OrderManager $orderManager;
+    /**
+     * @var ComponentManager
+     */
     private ComponentManager $componentManager;
+    /**
+     * @var User|null
+     */
     private ?User $user;
 
     /**
@@ -34,6 +53,10 @@ class AdminController extends Controller
         $this->checkAuth();
     }
 
+    /**
+     * Check if the user is authenticated and has not a Customer rank
+     * @return void
+     */
     public function checkAuth(){
         if(!isset($this->user)){
             $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
@@ -47,6 +70,8 @@ class AdminController extends Controller
     }
 
     /**
+     * The admin home page with check of prices
+     *
      * Route : /admin
      */
     public function index(){
@@ -54,6 +79,7 @@ class AdminController extends Controller
         $notAllLoaded = false;
         $notLoader = 0;
         $notBuyAble = 0;
+
         foreach ($this->componentManager->getComponents() as $component){
             $currentPrice = $this->configurationManager->getCurrentPrice($component);
             if($currentPrice == "Price timeout"){
@@ -90,7 +116,13 @@ class AdminController extends Controller
         }
     }
 
-    public function editProduct($id){
+    /**
+     * Get the edit page for a product
+     * @param int $id
+     * @return void
+     * @throws TemplateNotFound
+     */
+    public function editProduct(int $id){
         $component = $this->componentManager->getComponent($id);
         $this->render('\admin\Product.php',[
             'component' => $component,
@@ -99,6 +131,7 @@ class AdminController extends Controller
     }
 
     /**
+     * Get all the products/components
      * Route : /admin/products
      */
     public function products(){
@@ -109,6 +142,7 @@ class AdminController extends Controller
     }
 
     /**
+     * Get all the configurators
      * Route : /admin/configs
      */
     public function configs(){
@@ -119,6 +153,7 @@ class AdminController extends Controller
     }
 
     /**
+     * Get all orders
      * Route : /admin/orders
      */
     public function orders(){
@@ -130,6 +165,7 @@ class AdminController extends Controller
 
 
     /**
+     * End point to create a product
      * Route: /admin/product/create
      *
      */
@@ -153,6 +189,12 @@ class AdminController extends Controller
         header('Location: '.$actual_link ."/admin/products");
     }
 
+    /**
+     * Open a config page to edit the configurator
+     * @param $id
+     * @return void
+     * @throws TemplateNotFound
+     */
     public function config($id){
         $this->render('\admin\Configurator.php',
             [
@@ -161,6 +203,10 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * Endpoint to create a config
+     * @return void
+     */
     public function createConfig(){
         $file_name = $_FILES['image']['name'];
         $file_tmp = $_FILES['image']['tmp_name'];
@@ -173,11 +219,14 @@ class AdminController extends Controller
         header('Location: '.$actual_link ."/admin/configs");
     }
 
-    public function saveConfig($id){
+    /**
+     * Save the configurator
+     * @param int $id
+     * @return void
+     */
+    public function saveConfig(int $id){
         $config = $this->configurationManager->getConfig($id);
-        if(!isset($_POST['component'])){
-
-        }else{
+        if(isset($_POST['component'])){
             foreach ($_POST['component'] as $comp){
                 if(!in_array($comp,$config->getAllComponents())){
                     $this->componentManager->addConfigOption($id,$comp);
@@ -203,6 +252,10 @@ class AdminController extends Controller
         header('Location: '.$actual_link ."/admin/config/".$id);
     }
 
+    /**
+     * Endpoint to update a product
+     * @return void
+     */
     public function updateProduct(){
         $component = new Component($_POST['id'],$_POST['name']);
         $component->setDescription($_POST['description']);
@@ -226,7 +279,13 @@ class AdminController extends Controller
         header('Location: '.$actual_link ."/admin/products/");
     }
 
-    public function orderInfo($id){
+    /**
+     * Get order info of an order
+     * @param int $id
+     * @return void
+     * @throws TemplateNotFound
+     */
+    public function orderInfo(int $id){
         $order = $this->orderManager->getOrder($id);
         $this->render('\admin\Order.php',
             [
@@ -235,7 +294,12 @@ class AdminController extends Controller
             ]);
     }
 
-    public function updateOrder($id){
+    /**
+     * Endpoint to update an order
+     * @param int $id
+     * @return void
+     */
+    public function updateOrder(int $id){
         $order = $this->orderManager->getOrder($id);
         $user = $this->userManager->getUser($order->getCustomerId());
         if(isset($_POST['paid']) && (!$order->isPaid())){
