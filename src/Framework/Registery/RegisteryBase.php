@@ -28,7 +28,12 @@ class RegisteryBase
         return $this->mysql;
     }
 
-    private function isCache($name) : bool
+    /**
+     * Check if the cache exist and is valid
+     * @param string $name
+     * @return bool
+     */
+    private function isCache(string $name) : bool
     {
         if(file_exists("cache/".$name.".json")){
             if(json_decode(file_get_contents("cache/".$name.".json"),true)['endTime'] >= microtime(true)){
@@ -40,6 +45,12 @@ class RegisteryBase
         return false;
     }
 
+    /**
+     * @param string $name
+     * @param float $time
+     * @param mixed $data
+     * @return CacheObject
+     */
     public function getCache(string $name,float $time,mixed $data) : CacheObject
     {
         $cache = new CacheObject();

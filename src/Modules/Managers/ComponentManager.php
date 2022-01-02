@@ -5,9 +5,17 @@ namespace PcBuilder\Modules\Managers;
 use PcBuilder\Framework\Registery\Manager;
 use PcBuilder\Objects\Component;
 
+/**
+ * Manage the component's
+ */
 class ComponentManager extends Manager
 {
 
+    /**
+     * Get the price from a component id
+     * @param int $id
+     * @return float
+     */
     public function getPrice(int $id) : float
     {
         $statement = $this->getMysql()->getPdo()->prepare("SELECT `price` FROM `pc-builder`.`components` WHERE `id` = :id;");
@@ -18,9 +26,15 @@ class ComponentManager extends Manager
         if($row == false){
             return 0;
         }
+
         return $row['price'];
     }
 
+    /**
+     * Get component by id
+     * @param int $id
+     * @return Component|null
+     */
     function getComponent(int $id) : ?Component
     {
 
@@ -29,8 +43,10 @@ class ComponentManager extends Manager
             $statement->execute([
                 ':id' => $id
             ]);
+
             $row = $statement->fetch();
             if($row == false){
+
                 return null;
             }
             $component = new Component($row['id'],$row['displayName']);
@@ -60,18 +76,30 @@ class ComponentManager extends Manager
 
             return $component;
         }catch (\Exception $exception){
-            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden");
+            $this->flasher_error("Something went wrong try to refresh");
         }
 
         return null;
     }
 
+    /**
+     * Transfer the int from mysql to a bool in php
+     * @param int $int
+     * @return bool
+     */
     public function transferIntToBool($int) : bool
     {
-        return $int == 1 ? true : false;
+        return $int == 1;
     }
 
-    public function createComponent(Component $component,$tweakers,$enabled){
+    /**
+     * Create component
+     * @param Component $component
+     * @param int $tweakers
+     * @param bool $enabled
+     * @return void
+     */
+    public function createComponent(Component $component,int $tweakers, bool $enabled){
         $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `components`( `displayName`, `description`, `image`, `price`, `powerneed`, `type`, `tweakers_id`,`enabled`) 
                                                             VALUES (:name,:description,:image,:price,:power,:type,:tweakers,:enabled)");
         $statement->execute([
@@ -87,8 +115,12 @@ class ComponentManager extends Manager
     }
 
 
-
-    function getComponents($enabled = true) : ?array
+    /**
+     * Get component's from the database
+     * @param bool $enabled
+     * @return array|null
+     */
+    function getComponents(bool $enabled = true) : ?array
     {
 
         $items = [];
@@ -138,7 +170,13 @@ class ComponentManager extends Manager
         return $items;
     }
 
-    function addConfigOption($config,$id){
+    /**
+     * Link the config and a component
+     * @param int $config config id
+     * @param int $id component id
+     * @return void
+     */
+    function addConfigOption(int $config,int $id){
         $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `config_components`(`config_id`, `component_id`) VALUES (:CONFIGID,:COMPONENTID)");
         $statement->execute([
             ':CONFIGID' => $config,
@@ -146,7 +184,13 @@ class ComponentManager extends Manager
         ]);
     }
 
-    function removeConfigOption($config,$id){
+    /**
+     * Remove the link between a config and a component
+     * @param int $config config id
+     * @param int $id component id
+     * @return void
+     */
+    function removeConfigOption(int $config, int $id){
         $statement = $this->getMysql()->getPdo()->prepare("DELETE FROM `config_components` WHERE `config_id` = :CONFIGID AND `component_id` = :COMPONENTID");
         $statement->execute([
             ':CONFIGID' => $config,
@@ -155,7 +199,12 @@ class ComponentManager extends Manager
     }
 
 
-    function getComponentsByType($type) :array
+    /**
+     * Get component's by type
+     * @param string $type
+     * @return array
+     */
+    function getComponentsByType(string $type) :array
     {
         $items = [];
 
@@ -165,8 +214,11 @@ class ComponentManager extends Manager
                     ':type' => $type
                 ]
             );
+
             foreach ($statement->fetchAll() as $row){
+
                 $component = new Component($row['id'],$row['displayName']);
+
                 if(isset($row['description'])){
                     $component->setDescription($row['description']);
                 }
@@ -178,10 +230,13 @@ class ComponentManager extends Manager
                 if(isset($row['image'])){
                     $component->setImage($row['image']);
                 }
+
                 $component->setPrice($row['price']);
+
                 if(isset($row['powerneed'])){
                     $component->setPowerNeed($row['powerneed']);
                 }
+
                 if(isset($row['type'])){
                     $component->setType($row['type']);
                 }
@@ -203,7 +258,12 @@ class ComponentManager extends Manager
     }
 
 
-    function getOrderdComponents($ids,$addNone = false) :array
+    /**
+     * @param $ids
+     * @param $addNone
+     * @return array
+     */
+    function getOrderdComponents($ids, $addNone = false) :array
     {
         $components = array();
         foreach ($ids as $id){
@@ -227,6 +287,10 @@ class ComponentManager extends Manager
         return $components;
     }
 
+    /**
+     * @param Component $component
+     * @return void
+     */
     public function updateComponent(Component $component){
         $statement = $this->getMysql()->getPdo()->prepare("UPDATE `components` SET 
                       `displayName`=:name,

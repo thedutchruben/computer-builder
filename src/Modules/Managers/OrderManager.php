@@ -5,6 +5,7 @@ namespace PcBuilder\Modules\Managers;
 use PcBuilder\Framework\Registery\Manager;
 use PcBuilder\MailUtil;
 use PcBuilder\Objects\Orders\Order;
+use PcBuilder\Objects\Orders\OrderItem;
 use PcBuilder\Objects\Orders\OrderItems\ConfigurationOrderItem;
 use PcBuilder\Objects\ShoppingCart;
 use PcBuilder\Objects\User\User;
@@ -107,6 +108,7 @@ class OrderManager extends Manager
 
 
     /**
+     * Update the order
      * @param Order $order
      * @return void
      */
@@ -120,6 +122,7 @@ class OrderManager extends Manager
     }
 
     /**
+     * Get a count with open orders
      * @return mixed
      */
     public function getOpenOrderCount(){
@@ -130,6 +133,7 @@ class OrderManager extends Manager
     }
 
     /**
+     * Get a count with orders that are in production
      * @return mixed
      */
     public function getProductionOrderCount(){
@@ -140,11 +144,14 @@ class OrderManager extends Manager
     }
 
     /**
-     * @param $item
+     * Add an item to the shopping cart
+     * @param OrderItem $item
      * @return void
      */
-    public function addItemToCart($item){
-        $this->flasher_success("Item added to shopping cart");
+    public function addItemToCart(OrderItem $item){
+        $this->flasher_success("Item added to shopping cart",[
+            'showTill' => microtime(true) + 5000
+        ]);
         //ShoppingCart
         if(!isset($_SESSION['shopping-cart'])){
             $_SESSION['shopping-cart'] = new ShoppingCart();
@@ -153,6 +160,7 @@ class OrderManager extends Manager
     }
 
     /**
+     * Get the shopping cart
      * @return ShoppingCart
      */
     public function getShoppingCart() :ShoppingCart
@@ -161,6 +169,7 @@ class OrderManager extends Manager
     }
 
     /**
+     * Get all the order by newest date
      * @return array
      */
     public function getOrders(){
@@ -189,10 +198,11 @@ class OrderManager extends Manager
     }
 
     /**
-     * @param $id
+     * Get an order by id
+     * @param int $id
      * @return Order|null
      */
-    public function getOrder($id) : ?Order
+    public function getOrder(int $id) : ?Order
     {
 
         try {
@@ -234,7 +244,7 @@ class OrderManager extends Manager
                         array_push($array,$item['component_id']);
                         $configItem->setComponents($array);
                     }
-
+                    $configItem->addPrice($price);
                     $array1 = $order->getItems();
                     array_push($array1,$configItem);
                     $order->setItems($array1);
@@ -243,25 +253,27 @@ class OrderManager extends Manager
 
             return $order;
         }catch (\Exception $exception){
-            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden");
+            $this->flasher_error("Something went wrong try to refresh");
         }
         return null;
     }
 
     /**
-     * @param $int
+     * Transfer the int from mysql to a bool in php
+     * @param int $int
      * @return bool
      */
-    public function transferIntToBool($int) : bool
+    public function transferIntToBool(int $int = 0) : bool
     {
         return $int == 1 ? true : false;
     }
 
     /**
-     * @param $userId
+     * Get the orders of a user
+     * @param int $userId
      * @return array
      */
-    public function getUserOrders($userId) : array
+    public function getUserOrders(int $userId) : array
     {
         $statement =  $this->getMysql()->getPdo()->prepare("SELECT `id` FROM `orders` WHERE `customer_id` = :ID");
         $statement->execute([

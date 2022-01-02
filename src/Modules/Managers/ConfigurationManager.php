@@ -7,9 +7,16 @@ use PcBuilder\Objects\Component;
 use PcBuilder\Objects\Configurator;
 use PcBuilder\Objects\Orders\Order;
 
+/**
+ *
+ */
 class ConfigurationManager extends Manager
 {
 
+    /**
+     * Get the basic info of the configurators
+     * @return array
+     */
     public function getBasicConfigurator() : array
     {
         $config = array();
@@ -23,10 +30,18 @@ class ConfigurationManager extends Manager
             $data['image'] = $row['image'];
             array_push($config,$data);
         }
+
         return $config;
     }
 
-    public function createConfig(Configurator $configurator,$price,$image){
+    /**
+     * Create a configurator
+     * @param Configurator $configurator
+     * @param float $price
+     * @param string $image
+     * @return void
+     */
+    public function createConfig(Configurator $configurator, float $price, string $image){
         $statement = $this->getMysql()->getPdo()->prepare("INSERT INTO `configs`(`name`, `basePrice`, `image`, `description`) VALUES (:name,:basePrice,:image,:description);");
         $statement->execute([
             ':name' => $configurator->getName(),
@@ -37,7 +52,12 @@ class ConfigurationManager extends Manager
     }
 
 
-    public function getConfig($id) : Configurator
+    /**
+     * Get a configurator by id
+     * @param int $id
+     * @return Configurator
+     */
+    public function getConfig(int $id) : Configurator
     {
         $config = new Configurator($id);
         $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM `pc-builder`.`configs` WHERE `id` = :id;");
@@ -62,7 +82,13 @@ class ConfigurationManager extends Manager
         return $config;
     }
 
-    function getConfigItems($configId,$type) : ?array
+    /**
+     * Get the component id's of a configurator by a type
+     * @param int $configId
+     * @param string $type
+     * @return array|null
+     */
+    function getConfigItems(int $configId, string $type) : ?array
     {
         $array = array();
         $statement = $this->getMysql()->getPdo()->prepare("SELECT * FROM config_components LEFT JOIN components
@@ -80,8 +106,11 @@ class ConfigurationManager extends Manager
     }
 
 
-
-
+    /**
+     * Get the current price
+     * @param Component $component
+     * @return array|false|mixed|string|string[]
+     */
     public function getCurrentPrice(Component $component){
         if($component->getTweakersId() == -1) return "0";
         $cache = $this->getCache("prices-" . $component->getTweakersId(),1000*60,null);
