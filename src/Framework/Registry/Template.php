@@ -1,6 +1,6 @@
 <?php
 
-namespace PcBuilder\Framework\Registery;
+namespace PcBuilder\Framework\Registry;
 
 use PcBuilder\Framework\Execptions\TemplateNotFound;
 
@@ -13,12 +13,12 @@ class Template
     /**
      * @var string The path where
      */
-    private $path;
+    private string $path;
 
     /**
      * @var array The default values for al the pages
      */
-    private $parameters = [];
+    private array $parameters = [];
 
     public function __construct(string $path, array $parameters = [])
     {

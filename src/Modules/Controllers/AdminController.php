@@ -3,7 +3,7 @@
 namespace PcBuilder\Modules\Controllers;
 
 use PcBuilder\Framework\Execptions\TemplateNotFound;
-use PcBuilder\Framework\Registery\Controller;
+use PcBuilder\Framework\Registry\Controller;
 use PcBuilder\MailUtil;
 use PcBuilder\Modules\Managers\ComponentManager;
 use PcBuilder\Modules\Managers\ConfigurationManager;

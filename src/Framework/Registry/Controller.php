@@ -1,11 +1,11 @@
 <?php
 
-namespace PcBuilder\Framework\Registery;
+namespace PcBuilder\Framework\Registry;
 
 use PcBuilder\Framework\Execptions\TemplateNotFound;
 
 class Controller
-extends RegisteryBase{
+extends RegistryBase{
 
     private Template $templates;
 

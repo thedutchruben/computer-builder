@@ -3,7 +3,7 @@
 namespace PcBuilder\Modules\Controllers;
 
 use PcBuilder\Framework\Execptions\TemplateNotFound;
-use PcBuilder\Framework\Registery\Controller;
+use PcBuilder\Framework\Registry\Controller;
 use PcBuilder\Modules\Managers\OrderManager;
 use PcBuilder\Modules\Managers\UserManager;
 use PcBuilder\Objects\User\User;

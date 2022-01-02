@@ -2,7 +2,7 @@
 
 namespace PcBuilder\Modules\Managers;
 
-use PcBuilder\Framework\Registery\Manager;
+use PcBuilder\Framework\Registry\Manager;
 use PcBuilder\MailUtil;
 use PcBuilder\Objects\Orders\Order;
 use PcBuilder\Objects\Orders\OrderItem;

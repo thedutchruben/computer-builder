@@ -1,6 +1,6 @@
 <?php
 
-namespace PcBuilder\Framework\Registery;
+namespace PcBuilder\Framework\Registry;
 
 use ArrayObject;
 use DevCoder\Exception\RouteNotFound;
@@ -9,7 +9,7 @@ use DevCoder\UrlGenerator;
 use PcBuilder\Framework\Execptions\TemplateNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PcBuilderRouter extends RegisteryBase implements \DevCoder\RouterInterface
+class PcBuilderRouter extends RegistryBase implements \DevCoder\RouterInterface
 {
 
     private const NO_ROUTE = 404;

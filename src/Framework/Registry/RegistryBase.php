@@ -1,19 +1,27 @@
 <?php
 
-namespace PcBuilder\Framework\Registery;
+namespace PcBuilder\Framework\Registry;
 
 use PcBuilder\Framework\Cache\CacheObject;
 use PcBuilder\Framework\Database\Mysql;
 use PcBuilder\Objects\Message;
 
 /**
- * The base of the registery
+ * The base of the registry
  * In this class the flasher and mysql has been implemented
  */
-class RegisteryBase
+class RegistryBase
 {
 
+    /**
+     * The mysql connection for the website
+     * @var Mysql
+     */
     private Mysql $mysql;
+
+    /**
+     * Setup all the needed data for the registry
+     */
     public function __construct()
     {
         $this->mysql = new Mysql();
@@ -21,6 +29,7 @@ class RegisteryBase
     }
 
     /**
+     * Get the mysql connection
      * @return Mysql
      */
     public function getMysql(): Mysql
@@ -46,6 +55,7 @@ class RegisteryBase
     }
 
     /**
+     * Get the cache file and put the data if needed
      * @param string $name
      * @param float $time
      * @param mixed $data
@@ -70,20 +80,13 @@ class RegisteryBase
         return $cache;
     }
 
-    public function render_flashers(){
-        foreach ($_SESSION['messages'] as $message){
-            if(isset($message['showTill'])){
-                if(!$message['showTill'] <= microtime(true)){
-                    return;
-                }
-            }
-            echo "<script>";
-            echo "window.FlashMessage.success('".$message."');";
-            echo "</script>";
-        }
-    }
-
-    public function flasher_success(string $message,$settings = []){
+    /**
+     * Render a success flash
+     * @param string $message
+     * @param array $settings
+     * @return void
+     */
+    public function flasher_success(string $message, array $settings = []){
         $messageObject = new Message();
         $messageObject->setText($message);
         $messageObject->setOptions($settings);
@@ -103,7 +106,13 @@ class RegisteryBase
         echo "</script>";
     }
 
-    public function flasher_error($message,$settings = []){
+    /**
+     * Render a error flash
+     * @param string $message
+     * @param array $settings
+     * @return void
+     */
+    public function flasher_error(string $message, array $settings = []){
         $messageObject = new Message();
         $messageObject->setText($message);
         $messageObject->setOptions($settings);
@@ -123,7 +132,13 @@ class RegisteryBase
         echo "</script>";
     }
 
-    public function flasher_warning($message,$settings = []){
+    /**
+     * Render a warning flash
+     * @param string $message
+     * @param array $settings
+     * @return void
+     */
+    public function flasher_warning(string $message,array $settings = []){
         $messageObject = new Message();
         $messageObject->setText($message);
         $messageObject->setOptions($settings);
@@ -144,6 +159,11 @@ class RegisteryBase
     }
 
 
+    /**
+     * Get the users ip
+     * For logging only!
+     * @return mixed
+     */
     public function getIp(){
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
