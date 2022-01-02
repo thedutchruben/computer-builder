@@ -8,11 +8,21 @@ use PcBuilder\Modules\Managers\ConfigurationManager;
 use PcBuilder\Modules\Managers\OrderManager;
 use PcBuilder\Modules\Managers\UserManager;
 
+/**
+ * Controller for all the user endpoints
+ */
 class UserController extends Controller
 {
 
+    /**
+     * A link to the user manager
+     * @var UserManager
+     */
     private UserManager $userManager;
 
+    /**
+     * Register all the variable's that are needed for the controller
+     */
     public function __construct()
     {
         parent::__construct();
@@ -20,6 +30,7 @@ class UserController extends Controller
     }
 
     /**
+     * Location for the use tot login
      * Route : /login
      * @throws TemplateNotFound
      */
@@ -52,6 +63,7 @@ class UserController extends Controller
     }
 
     /**
+     * Location for people to register an account
      * Route : /register
      */
     public function register(){

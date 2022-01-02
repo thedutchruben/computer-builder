@@ -33,8 +33,8 @@ $router = new PcBuilderRouter([
     new Route('custom_pc', '/custom-pc/{id}', [ConfiguratorController::class,"Configurator"],['GET']),
     new Route('add_pc', '/custom-pc/{id}', [ConfiguratorController::class,"Configurator_Post"],['POST']),
 
-    //card routing
-    new Route('card', '/card', [IndexController::class,"card"]),
+    //cart routing
+    new Route('cart', '/cart', [IndexController::class,"cart"]),
     new Route('checkout', '/checkout', [IndexController::class,"checkout"],['GET']),
     new Route('checkout_pay', '/checkout', [IndexController::class,"checkout_post"],['POST']),
 

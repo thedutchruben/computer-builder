@@ -41,18 +41,18 @@ class ConfiguratorController extends Controller
         $this->render('Configurator.php',[
             'name' => $config->getName(),
             'description' => $config->getDescription(),
-            'cases' => $this->componentManager->getOrderdComponents($config->getCases()),
-            'cpu' => $this->componentManager->getOrderdComponents($config->getCpu()),
-            'cpucoolers' => $this->componentManager->getOrderdComponents($config->getCpuCoolers()),
-            'motherboard' => $this->componentManager->getOrderdComponents($config->getMotherboard()),
-            'memory' => $this->componentManager->getOrderdComponents($config->getMemory()),
-            'storage' => $this->componentManager->getOrderdComponents($config->getStorage()),
-            'storage1' => $this->componentManager->getOrderdComponents($config->getStorage(),true),
-            'gpu' => $this->componentManager->getOrderdComponents($config->getGpu()),
-            'rgb' => $this->componentManager->getOrderdComponents($config->getRgb(),true),
-            'dvd' => $this->componentManager->getOrderdComponents($config->getDvd(),true),
-            'psu' => $this->componentManager->getOrderdComponents($config->getPsu()),
-            'os' => $this->componentManager->getOrderdComponents($config->getOs()),
+            'cases' => $this->componentManager->getOrderedComponents($config->getCases()),
+            'cpu' => $this->componentManager->getOrderedComponents($config->getCpu()),
+            'cpucoolers' => $this->componentManager->getOrderedComponents($config->getCpuCoolers()),
+            'motherboard' => $this->componentManager->getOrderedComponents($config->getMotherboard()),
+            'memory' => $this->componentManager->getOrderedComponents($config->getMemory()),
+            'storage' => $this->componentManager->getOrderedComponents($config->getStorage()),
+            'storage1' => $this->componentManager->getOrderedComponents($config->getStorage(),true),
+            'gpu' => $this->componentManager->getOrderedComponents($config->getGpu()),
+            'rgb' => $this->componentManager->getOrderedComponents($config->getRgb(),true),
+            'dvd' => $this->componentManager->getOrderedComponents($config->getDvd(),true),
+            'psu' => $this->componentManager->getOrderedComponents($config->getPsu()),
+            'os' => $this->componentManager->getOrderedComponents($config->getOs()),
             'storageCount' => 2
         ]);
     }
@@ -68,7 +68,7 @@ class ConfiguratorController extends Controller
             $item->addPrice($this->componentManager->getPrice($component));
         }
         $this->orderManager->addItemToCart($item);
-        header('Location: ' . "/card", true);
+        header('Location: ' . "/cart", true);
     }
 
 }

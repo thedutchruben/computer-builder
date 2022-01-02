@@ -259,11 +259,13 @@ class ComponentManager extends Manager
 
 
     /**
-     * @param $ids
-     * @param $addNone
+     * Get the components on price order
+     * The addNone can be added if the component is not required
+     * @param array $ids
+     * @param bool $addNone
      * @return array
      */
-    function getOrderdComponents($ids, $addNone = false) :array
+    function getOrderedComponents(array $ids, bool $addNone = false) :array
     {
         $components = array();
         foreach ($ids as $id){
@@ -288,6 +290,7 @@ class ComponentManager extends Manager
     }
 
     /**
+     * Update the component data
      * @param Component $component
      * @return void
      */

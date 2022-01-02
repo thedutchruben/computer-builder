@@ -44,22 +44,14 @@ class IndexController extends Controller
 
     }
 
-    /**
-     * Route : /contact
-     *
-     * This will show the sitemap
-     */
-    public function contact(){
-
-    }
 
     /**
-     * Route : /card
+     * Route : /cart
      *
-     * This will show the sitemap
+     * This will show the shopping cart
      */
-    public function card(){
-        $this->render('CardPage.php');
+    public function cart(){
+        $this->render('CartPage.php');
     }
 
     /**
@@ -87,7 +79,7 @@ class IndexController extends Controller
         $user = $this->userManager->getSessionUser();
         $order = $this->orderManager->placeOrder($user,$this->orderManager->getShoppingCart()->getItems());
         if($order == null){
-            header('Location: ' . "/card", true);
+            header('Location: ' . "/cart", true);
             $this->flasher_error("<h2>Someting went wrong</h2><\br> <p>It was not possible to register the order</p>");
         }else{
             header('Location: ' . "/customer/order/".$order, true);
