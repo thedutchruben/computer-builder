@@ -2,13 +2,22 @@
 
 namespace PcBuilder\Framework\Registry;
 
-use PcBuilder\Framework\Execptions\TemplateNotFound;
+use PcBuilder\Framework\Exception\TemplateNotFound;
 
-class Controller
-extends RegistryBase{
+/**
+ * The base of the controllers
+ */
+class Controller extends RegistryBase{
 
+    /**
+     * All the templates
+     * @var Template
+     */
     private Template $templates;
 
+    /**
+     * Setup all the links that are needed
+     */
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +26,7 @@ extends RegistryBase{
 
 
     /**
+     * Render a page with the needed items
      * @throws TemplateNotFound
      */
     public function render($view, $context = [])
@@ -26,6 +36,7 @@ extends RegistryBase{
 
 
     /**
+     * Get all the templates
      * @return mixed
      */
     public function getTemplates() : Template

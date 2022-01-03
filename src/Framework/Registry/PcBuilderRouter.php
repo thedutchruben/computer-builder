@@ -3,13 +3,13 @@
 namespace PcBuilder\Framework\Registry;
 
 use ArrayObject;
-use DevCoder\Exception\RouteNotFound;
 use DevCoder\Route;
+use DevCoder\RouterInterface;
 use DevCoder\UrlGenerator;
-use PcBuilder\Framework\Execptions\TemplateNotFound;
+use PcBuilder\Framework\Exception\TemplateNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PcBuilderRouter extends RegistryBase implements \DevCoder\RouterInterface
+class PcBuilderRouter extends RegistryBase implements RouterInterface
 {
 
     private const NO_ROUTE = 404;

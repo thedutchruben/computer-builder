@@ -2,7 +2,7 @@
 
 namespace PcBuilder\Framework\Registry;
 
-use PcBuilder\Framework\Execptions\TemplateNotFound;
+use PcBuilder\Framework\Exception\TemplateNotFound;
 
 /**
  * The template will render variables in to a php file

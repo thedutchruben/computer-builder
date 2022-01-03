@@ -3,7 +3,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use DevCoder\Route;
 use Dotenv\Dotenv;
-use PcBuilder\Framework\Execptions\TemplateNotFound;
+use PcBuilder\Framework\Exception\TemplateNotFound;
 use PcBuilder\Framework\Registry\PcBuilderRouter;
 use PcBuilder\Framework\Registry\Template;
 use PcBuilder\Modules\Controllers\AdminController;

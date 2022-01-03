@@ -2,7 +2,7 @@
 
 namespace PcBuilder\Modules\Controllers;
 
-use PcBuilder\Framework\Execptions\TemplateNotFound;
+use PcBuilder\Framework\Exception\TemplateNotFound;
 use PcBuilder\Framework\Registry\Controller;
 use PcBuilder\Modules\Managers\ConfigurationManager;
 use PcBuilder\Modules\Managers\OrderManager;

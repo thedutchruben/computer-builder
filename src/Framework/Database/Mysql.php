@@ -5,10 +5,20 @@ namespace PcBuilder\Framework\Database;
 use PDO;
 use PDOException;
 
+/**
+ * Class for the mysql connection
+ */
 class Mysql
 {
+    /**
+     * Pdo is the type of mysql library that we gonna use
+     * @var PDO
+     */
     private PDO $PDO;
 
+    /**
+     * Setting up the connection
+     */
     public function __construct()
     {
         $servername = $_ENV['MYSQL_HOST'];
@@ -27,6 +37,10 @@ class Mysql
     }
 
 
+    /**
+     * Get the pdo object
+     * @return PDO
+     */
     public function getPdo() :PDO
     {
         return $this->PDO;
