@@ -69,7 +69,7 @@ class CacheObject
     }
 
     /**
-     * Sace the cache object to a file
+     * Save the cache object to a file
      * @param $object
      * @return void
      */

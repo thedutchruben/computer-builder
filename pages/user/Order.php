@@ -41,7 +41,7 @@ if($order->isPaid()){
     }
 
     .paid_status{
-        width: 25%;
+        width: 50%;
     }
     .order_status{
         width: 50%;
@@ -53,6 +53,33 @@ if($order->isPaid()){
         width: 100%;
     }
 
+    <?php
+    if($order->isPaid()){
+    switch ($order->getStatus()){
+        case "IN_ORDER":
+            echo "
+                .order_bold{
+                    font-weight:bold;
+                }
+            ";
+            break;
+        case "IN_PRODUCTION":
+            echo "
+                .prod_bold{
+                    font-weight:bold;
+                }
+            ";
+            break;
+        case "SEND":
+            echo "
+                .comp_bold{
+                    font-weight:bold;
+                }
+            ";
+            break;
+    }
+}
+    ?>
 </style>
 
 <div class="container order-data">
@@ -74,16 +101,16 @@ if($order->isPaid()){
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col pay_bold">
                 Payment confirm
             </div>
-            <div class="col">
+            <div class="col order_bold">
                 In order
             </div>
-            <div class="col">
-                <b>In production</b>
+            <div class="col prod_bold">
+                In production
             </div>
-            <div class="col">
+            <div class="col comp_bold">
                 Completed
             </div>
         </div>
