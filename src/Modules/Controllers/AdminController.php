@@ -112,7 +112,10 @@ class AdminController extends Controller
             'productionOrders' => $this->orderManager->getProductionOrderCount()
         ]);
         if($notAllLoaded){
-            $this->flasher_error("<h2>Error</h2><br><p>Not all data is loaded right! (".$notLoader.")</p>");
+            $this->flasher_error("<h2>Error</h2><br><p>Not all data is loaded right! (".$notLoader.")</p>",
+                [
+                    'showTill' => microtime(true) + 1000
+                ]);
         }
     }
 
@@ -232,7 +235,7 @@ class AdminController extends Controller
                     $this->componentManager->addConfigOption($id,$comp);
                     $this->flasher_success("<p>Item Added</p>",
                         [
-                            'showTill' => microtime(true) + 20
+                            'showTill' => microtime(true) + 1000
                         ]);
                 }
             }

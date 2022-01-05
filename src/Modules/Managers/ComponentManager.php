@@ -76,7 +76,10 @@ class ComponentManager extends Manager
 
             return $component;
         }catch (\Exception $exception){
-            $this->flasher_error("Something went wrong try to refresh");
+            $this->flasher_error("Something went wrong try to refresh",
+                [
+                    'showTill' => microtime(true) + 1000
+                ]);
         }
 
         return null;
@@ -164,7 +167,10 @@ class ComponentManager extends Manager
 
 
         }catch (\Exception $exception){
-            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden");
+            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden",
+                [
+                    'showTill' => microtime(true) + 1000
+                ]);
         }
 
         return $items;
@@ -251,7 +257,10 @@ class ComponentManager extends Manager
 
 
         }catch (\Exception $exception){
-            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden");
+            $this->flasher_error("Er is iets fout gegaan probeer de pagina te reloaden",
+                [
+                    'showTill' => microtime(true) + 1000
+                ]);
         }
 
         return $items;

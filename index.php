@@ -54,7 +54,6 @@ $router = new PcBuilderRouter([
     new Route('admin_products', '/admin/products', [AdminController::class,"products"]),
     new Route('admin_products_create', '/admin/products/create', [AdminController::class,"registerProduct"],['POST','GET']),
     new Route('admin_products_edit', '/admin/products/{id}/edit', [AdminController::class,"editProduct"],['GET']),
-    new Route('admin_products_delete', '/admin/products/{id}/delete', [AdminController::class,"deleteProduct"]),
     new Route('admin_products_update', '/admin/products/update', [AdminController::class,"updateProduct"],['POST']),
 
     //Admin orders
@@ -115,8 +114,7 @@ if(isset($_SESSION['messages'])){
                 return;
             }
         }
-        var_dump($message['data']);
-        switch ($message['data']['type']){
+        switch ($message['data']->getType()){
             case "success":
                 echo "<script>";
                 echo "window.FlashMessage.success('".$message['data']->getText()."');";

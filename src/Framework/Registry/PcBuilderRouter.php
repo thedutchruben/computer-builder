@@ -77,7 +77,10 @@ VALUES(
 '$methods',
 '$vars');");
             }catch (\Exception $exception){
-                $this->flasher_error("Er is iets fout gegaan!");
+                $this->flasher_error("Er is iets fout gegaan!",
+                [
+                    'showTill' => microtime(true) + 1000
+                ]);
             }
 
             return $route;

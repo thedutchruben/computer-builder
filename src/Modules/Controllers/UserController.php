@@ -54,7 +54,10 @@ class UserController extends Controller
             }else{
                 $this->render("\account\Login.php");
                 $this->flasher_error(
-                    "<h3>Login Failure</h3><br><p>".$data['message']."</p>"
+                    "<h3>Login Failure</h3><br><p>".$data['message']."</p>",
+                    [
+                        'showTill' => microtime(true) + 1000
+                    ]
                 );
             }
         } else  {
@@ -74,7 +77,10 @@ class UserController extends Controller
             }else{
                 $this->render("\account\Register.php");
                 $this->flasher_error(
-                    "<h3>Register Failure</h3><br><p>".$data['message']."</p>"
+                    "<h3>Register Failure</h3><br><p>".$data['message']."</p>",
+                    [
+                        'showTill' => microtime(true) + 1000
+                    ]
                 );
             }
         } else  {

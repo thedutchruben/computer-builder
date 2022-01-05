@@ -92,7 +92,10 @@ class IndexController extends Controller
         $order = $this->orderManager->placeOrder($user,$this->orderManager->getShoppingCart()->getItems());
         if($order == null){
             header('Location: ' . "/cart", true);
-            $this->flasher_error("<h2>Someting went wrong</h2><\br> <p>It was not possible to register the order</p>");
+            $this->flasher_error("<h2>Someting went wrong</h2><\br> <p>It was not possible to register the order</p>",
+                [
+                    'showTill' => microtime(true) + 1000
+                ]);
         }else{
             header('Location: ' . "/customer/order/".$order, true);
         }
