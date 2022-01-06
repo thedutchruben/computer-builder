@@ -43,9 +43,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/customer/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/customer/orders">Orders</a>
-                </li>
             </ul>
         </div>
 
