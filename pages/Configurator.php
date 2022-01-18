@@ -97,11 +97,11 @@ include 'templates/Header.php';
             <div class="sticky-sm-top" style="padding-top: 50% !important;">
                 <div id="sideBar" class="sideBar">
                     <div id="priceBox">
-                        <p id="finalPrice"></p>
+                        <p id="finalPrice" style="padding-top: 10px;padding-left: 21px;font-size: 20px;color: white"></p>
                         <form method="post">
                             <input type="hidden" name="pcName" id="pcName" value="<?php echo $name?>">
                             <input type="hidden" name="config" id="config" value="">
-                            <input type="submit" name="addToCard"
+                            <input class="btn btn-outline-success" type="submit" name="addToCard"
                                    value="Add to Card"/>
                         </form>
                     </div>

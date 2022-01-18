@@ -117,12 +117,23 @@ class ConfigurationManager extends Manager
         if($cache->getData() != null){
             return $cache->getData();
         }
-        $info = file_get_contents("https://privateapi.thedutchruben.nl/api/v1/getprice/" . $component->getTweakersId());
-        $cache->setData($info);
-        if($info != "Price timeout"){
-            $cache->save($cache);
+        try {
+            $info = file_get_contents("https://privateapi.thedutchruben.nl/api/v1/getprice/" . $component->getTweakersId());
+
+        }catch (\Exception $e){
+            $info = json_encode("{
+                
+            }");
         }
 
-        return str_replace('.',',',$info);
+        if(json_decode($info,true)['code'] == 200){
+            $cache->setData(json_decode($info,true)['price']);
+            if($info != "Price timeout"){
+                $cache->save($cache);
+            }
+
+            return str_replace('.',',',json_decode($info,true)['price']);
+        }
+        return 'Price timeout';
     }
 }

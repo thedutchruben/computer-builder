@@ -44,12 +44,23 @@
 }
 
 .sideBar{
-    height: 400px;
+    height: 100px;
     width: 100%;
-    background-color: #555555;
+    background-color: #212529;
+    border: 1px solid;
+    border-radius: .25rem;
+    position: relative;
 }
 @media (min-width: 576px){
     .card-group {
         flex-flow: row nowrap;
     }
+}
+
+#priceBox{
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
