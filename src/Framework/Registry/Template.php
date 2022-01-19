@@ -34,6 +34,7 @@ class Template
     public function render(string $view, array $context = [])
     {
         if (!file_exists($file = $this->path.$view)) {
+            var_dump($this->path.$view);
             throw new TemplateNotFound(sprintf('The file %s could not be found.', $view));
         }
 
