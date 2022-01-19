@@ -292,7 +292,7 @@ class ComponentManager extends Manager
         }
 
         usort($components,function($first,$second){
-            return $first->getPrice() > $second->getPrice();
+            return strlen($second->getPrice()) <=> strlen($first->getPrice());
         });
 
         return $components;
