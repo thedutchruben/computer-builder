@@ -9,7 +9,7 @@
 
     "require": {
         "vlucas/phpdotenv": "5.*",
-        "devcoder-xyz/php-router": "^1.2",
+        "devcoder-xyz/php-router": "^2.0",
         "swiftmailer/swiftmailer": "6.3.0"
     },
     "authors": [
